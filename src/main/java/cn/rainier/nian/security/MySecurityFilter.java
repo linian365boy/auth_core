@@ -9,8 +9,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
@@ -20,21 +18,16 @@ import org.springframework.security.web.FilterInvocation;
 public class MySecurityFilter extends AbstractSecurityInterceptor implements Filter {
 	//与applicationContext-security.xml里的myFilter的属性securityMetadataSource对应，
 		//其他的两个组件，已经在AbstractSecurityInterceptor定义
-		@Autowired
 		private MySecurityMetadataSource securityMetadataSource;
-		@Autowired
 		private MyAccessDecisionManager accessDecisionManager;
-		@Autowired
-		private AuthenticationManager myAuthenticationManager; 
+		private AuthenticationManager autheticationManager; 
 		
-		@PostConstruct
-		public void init(){
-//			System.err.println(" ---------------  MySecurityFilter init--------------- ");
-			super.setAuthenticationManager(myAuthenticationManager);
+		/*public void initPre(){
+			//System.err.println(" ---------------  MySecurityFilter init--------------- ");
+			super.setAuthenticationManager(autheticationManager);
 			super.setAccessDecisionManager(accessDecisionManager);
-		}
+		}*/
 		
-		@Override
 		public SecurityMetadataSource obtainSecurityMetadataSource() {
 			return this.securityMetadataSource;
 		}
@@ -61,16 +54,52 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements Fil
 			}
 		}
 
-		public void init(FilterConfig arg0) throws ServletException {
-		}
-		
-		public void destroy() {
-			
-		}
-
 		@Override
 		public Class<? extends Object> getSecureObjectClass() {
 			//下面的MyAccessDecisionManager的supports方面必须放回true,否则会提醒类型错误
 			return FilterInvocation.class;
 		}
+
+		public MySecurityMetadataSource getSecurityMetadataSource() {
+			return securityMetadataSource;
+		}
+
+		public void setSecurityMetadataSource(
+				MySecurityMetadataSource securityMetadataSource) {
+			this.securityMetadataSource = securityMetadataSource;
+		}
+
+		public MyAccessDecisionManager getAccessDecisionManager() {
+			return accessDecisionManager;
+		}
+
+		public void setAccessDecisionManager(
+				MyAccessDecisionManager accessDecisionManager) {
+			this.accessDecisionManager = accessDecisionManager;
+		}
+		
+		public AuthenticationManager getAutheticationManager() {
+			return autheticationManager;
+		}
+
+		public void setAutheticationManager(AuthenticationManager autheticationManager) {
+			this.autheticationManager = autheticationManager;
+		}
+
+		/** 
+		 * TODO 简单描述该方法的实现功能（可选）. 
+		 * @see javax.servlet.Filter#destroy() 
+		 */
+		public void destroy() {
+			
+		}
+
+		/** 
+		 * TODO 简单描述该方法的实现功能（可选）. 
+		 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig) 
+		 */
+		public void init(FilterConfig arg0) throws ServletException {
+			
+		}
+		
 }

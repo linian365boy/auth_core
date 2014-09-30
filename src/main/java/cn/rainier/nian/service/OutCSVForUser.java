@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
@@ -33,7 +34,7 @@ public class OutCSVForUser{
 			List<User> result, PrintWriter out) {
 		User user = null;
 		UserComponent component = null;
-		List<Role> userRoles = null;
+		Set<Role> userRoles = null;
 		List<Field> fields = new ArrayList<Field>();
 		boolean flag = false;
 		for (short i = 0; i < headers.length; i++) {

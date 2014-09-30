@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -40,7 +42,7 @@ public class User extends IdEntity implements UserDetails{
 	/**
 	 * 所属角色
 	 */
-	private List<Role> roles;	
+	private Set<Role> roles;	
 	
 	
 	private UserComponent userComponent;
@@ -101,19 +103,21 @@ public class User extends IdEntity implements UserDetails{
     //关联到主表的外键名：主表名+下划线+主表中的主键列名,即userId
     //关联到从表的外键名：主表中用于关联的属性名+下划线+从表的主键列名,即roleId
     //主表就是关系维护端对应的表，从表就是关系被维护端对应的表
-	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	//@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH},
+			fetch = FetchType.EAGER)
 	@JoinTable(name="user_role",
 				joinColumns=@JoinColumn(name="userId"),
 				inverseJoinColumns=@JoinColumn(name="roleId")
 			)
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 	public boolean getEnabled() {
 		return enabled;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 	

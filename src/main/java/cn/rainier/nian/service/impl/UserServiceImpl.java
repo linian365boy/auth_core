@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
 		User user =  this.loadUserByName(username);
-		Collection<GrantedAuthority> grantedAuths = obtionGrantedAuthorities(user);
+		/*Collection<GrantedAuthority> grantedAuths = obtionGrantedAuthorities(user);
 		// 封装成spring security的user
 		org.springframework.security.core.userdetails.User userdetail = 
 				new org.springframework.security.core.userdetails.User(
@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService {
 			true,
 			true, 
 			grantedAuths	//用户的权限
-		);
-		return userdetail;
+		);*/
+		return user;
 	}
 	/**
 	 * 查询用户列表，根据Id排序，降序

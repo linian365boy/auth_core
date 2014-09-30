@@ -45,8 +45,8 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 	}
 	
 	private List<Role> getRoleByResourceId(Long id){
-		String sql = "select r.id,r.name from t_role r,resource re,role_resource rr where " +
-				"r.id = rr.role_id and re.id = rr.resource_id and re.id = ?";
+		String sql = "select r.name from role r,resource re,role_resource rr where " +
+				"r.name = rr.roleId and re.id = rr.resourceId and re.id = ?";
 		List<Role> roles = this.getJdbcTemplate().query(sql, new Long[]{id}, 
 				new RowMapper<Role>(){
 					public Role mapRow(ResultSet rs, int rowNum)
@@ -67,7 +67,7 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 	 * @CreateDate: 2013-3-28
 	 */
 	public List<Resource> findResourceByParentId(Long menuId) {
-		String sql = "select r.id,r.name,r.descn from resource r where r.menuId = ? and r.display is true order by priority desc";
+		String sql = "select r.name,r.descn from resource r where r.menuId = ? and r.display is true order by priority desc";
 		return this.getJdbcTemplate().query(sql,new Long[]{menuId},new RowMapper<Resource>(){
 			public Resource mapRow(ResultSet rs, int rowNum)
 					throws SQLException {

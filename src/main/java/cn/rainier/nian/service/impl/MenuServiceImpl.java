@@ -2,6 +2,7 @@ package cn.rainier.nian.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
@@ -17,7 +18,7 @@ public class MenuServiceImpl extends MenuService{
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public List<Menu> findParentMenuByRole(List<Role> roles,boolean flag) {
+	public List<Menu> findParentMenuByRole(Set<Role> roles,boolean flag) {
 		List<Menu> parentM = null;
 		if(!flag){//flag=false
 			parentM =  this.getMenuDao().findParentMenuByRole(roles);
@@ -38,7 +39,7 @@ public class MenuServiceImpl extends MenuService{
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	private List<Menu> getChildldByParentAndRoles(Serializable id, List<Role> roles) {
+	private List<Menu> getChildldByParentAndRoles(Serializable id, Set<Role> roles) {
 		return this.getMenuDao().getChildldByParentAndRoles(id,roles);
 	}
 	/**

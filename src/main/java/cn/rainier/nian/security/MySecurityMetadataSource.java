@@ -16,6 +16,7 @@ import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.model.Resource;
 
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+	
 	private ResourceDao resourceDao;
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
@@ -33,8 +34,6 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 	 * 
 	 * //加载所有资源与权限的关系
 	 */
-	@SuppressWarnings("restriction")
-	@PostConstruct
 	private void loadResourceDefine() {
 //		System.err.println("-----------MySecurityMetadataSource loadResourceDefine ----------- ");
 		if (resourceMap == null) {
@@ -71,4 +70,22 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 //		}
 		return configAttributes;
 	}
+
+	public ResourceDao getResourceDao() {
+		return resourceDao;
+	}
+
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
+	}
+
+	public static Map<String, Collection<ConfigAttribute>> getResourceMap() {
+		return resourceMap;
+	}
+
+	public static void setResourceMap(
+			Map<String, Collection<ConfigAttribute>> resourceMap) {
+		MySecurityMetadataSource.resourceMap = resourceMap;
+	}
+	
 }
