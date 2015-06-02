@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,13 +28,15 @@ import cn.rainier.nian.model.component.UserComponent;
 @SuppressWarnings("deprecation")
 @Entity
 @Table(name="user")
+@JsonIgnoreProperties("roles")
 public class User extends IdEntity implements UserDetails{
 	/**
-	 * 
+	 * 序列化
 	 */
 	private static final long serialVersionUID = -2414711442165502235L;
 	private String realName;			//真实姓名
 	private String username;			//用户名
+	private String email;				//邮箱
 	private String password;			//密码
 	private boolean enabled;			//账号是否可用  true为可用，false不可用
 	private boolean accountNonLocked;	//账号是否被锁！true为没锁，false为已锁
@@ -83,10 +86,6 @@ public class User extends IdEntity implements UserDetails{
 	}
 	
 	@Transient
-	public boolean isAccountNonLocked() {
-		return accountNonLocked;
-	}
-	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
@@ -113,10 +112,7 @@ public class User extends IdEntity implements UserDetails{
 	public Set<Role> getRoles() {
 		return roles;
 	}
-	public boolean getEnabled() {
-		return enabled;
-	}
-
+	
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
@@ -167,9 +163,6 @@ public class User extends IdEntity implements UserDetails{
 		this.accountNonLocked = accountNonLocked;
 	}
 	
-	public boolean getAccountNonLocked() {
-		return accountNonLocked;
-	}
 	@Temporal(TemporalType.DATE)
 	public Date getLastCloseDate() {
 		return lastCloseDate;
@@ -177,4 +170,18 @@ public class User extends IdEntity implements UserDetails{
 	public void setLastCloseDate(Date lastCloseDate) {
 		this.lastCloseDate = lastCloseDate;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+	
 }

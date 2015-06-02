@@ -17,16 +17,18 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import cn.rainier.nian.model.component.RoleComponent;
 
 @Entity
 @Table(name="ROLE")
+@JsonIgnoreProperties({"users","resources","menus"})
 public class Role implements Serializable {
 	private static final long serialVersionUID = -3498056750436845009L;
 	private String name;				//角色名
 	private String desc;				//角色描述
-	@Deprecated
-	private String marking;				//角色标识，自动生成，没有意义，可废弃
+	private String remarks;				//备注
 	private boolean defaultOrNo;		//是否默认角色
 	private Date createDate;			//创建角色日期
 	private List<User> users;			//角色下用户
@@ -86,14 +88,15 @@ public class Role implements Serializable {
 	public String toString() {
 		return "name:"+name+",describle:"+desc;
 	}
-	@Deprecated
-	public String getMarking() {
-		return marking;
+	
+	public String getRemarks() {
+		return remarks;
 	}
-	@Deprecated
-	public void setMarking(String marking) {
-		this.marking = marking;
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
+
 	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinTable(name="role_menu",
 				joinColumns=@JoinColumn(name="roleId"),

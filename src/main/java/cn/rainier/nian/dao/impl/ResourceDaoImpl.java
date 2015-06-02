@@ -67,7 +67,7 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 	 * @CreateDate: 2013-3-28
 	 */
 	public List<Resource> findResourceByParentId(Long menuId) {
-		String sql = "select r.name,r.descn from resource r where r.menuId = ? and r.display is true order by priority desc";
+		String sql = "select r.id,r.name,r.descn from resource r where r.menuId = ? and r.display is true order by priority desc";
 		return this.getJdbcTemplate().query(sql,new Long[]{menuId},new RowMapper<Resource>(){
 			public Resource mapRow(ResultSet rs, int rowNum)
 					throws SQLException {

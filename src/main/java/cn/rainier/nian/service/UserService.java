@@ -18,11 +18,12 @@ public interface UserService extends UserDetailsService {
 	 * @param pageNo
 	 * @param pageSize
 	 * @param flag
-	 * @return
+	 * @param userId 当前登录Id
+	 * @return 
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,boolean flag);
+	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Long userId,boolean flag);
 	/**
 	 * @FunName: loadUserByName
 	 * @Description:  根据用户名查询用户。用户名是唯一的

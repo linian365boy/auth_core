@@ -50,10 +50,10 @@ public class OutCSVForUser{
 				out.write("=\""+user.getRealName()+"\",");
 				out.write("=\""+user.getUsername()+"\",");
 				
-				if(!user.getAccountNonLocked()){
+				if(!user.isAccountNonLocked()){
 					out.write("=\""+"注销"+"\",");
 				}else{
-					if(user.getEnabled()){
+					if(user.isEnabled()){
 						out.write("=\""+"正常"+"\",");
 					}else{
 						out.write("=\""+"禁用"+"\",");

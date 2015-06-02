@@ -3,18 +3,15 @@ package cn.rainier.nian.service.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -33,7 +30,6 @@ import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
-
 import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Resource;
@@ -55,27 +51,16 @@ public class UserServiceImpl implements UserService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
 		User user =  this.loadUserByName(username);
-		/*Collection<GrantedAuthority> grantedAuths = obtionGrantedAuthorities(user);
-		// 封装成spring security的user
-		org.springframework.security.core.userdetails.User userdetail = 
-				new org.springframework.security.core.userdetails.User(
-			user.getUsername(), 
-			user.getPassword(),
-			true, 
-			true, 
-			true,
-			true, 
-			grantedAuths	//用户的权限
-		);*/
 		return user;
 	}
 	/**
 	 * 查询用户列表，根据Id排序，降序
+	 * @param userId 
 	 */
-	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,boolean flag) {
+	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Long userId, boolean flag) {
 		PageRainier<User> page = null;
 		if(flag){
-			Page<User> tempPage = userDao.findAll(new PageRequest(pageNo-1, pageSize,new Sort(Direction.DESC, "id")));
+			Page<User> tempPage = userDao.findAll(userSpecification(userId),new PageRequest(pageNo-1, pageSize,new Sort(Direction.DESC, "id")));
 			page = new PageRainier<User>(tempPage.getTotalElements(), pageNo, pageSize);
 			List<User> users = tempPage.getContent();
 			page.setResult(users);
@@ -84,6 +69,16 @@ public class UserServiceImpl implements UserService {
 			page.setResult(userDao.findAll(new Sort(Direction.ASC, "id")));
 		}
 		return page;
+	}
+	
+	private Specification<User> userSpecification(final Long id){
+		return new Specification<User>() {
+			@Override
+			public Predicate toPredicate(Root<User> root,
+					CriteriaQuery<?> query, CriteriaBuilder cb) {
+				return cb.notEqual(root.get("id"), id);
+			}
+		};
 	}
 	
 	public User loadUserByName(String userid) {
