@@ -1,6 +1,7 @@
 package cn.rainier.nian.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import cn.rainier.nian.dao.MenuDao;
 import cn.rainier.nian.model.Menu;
@@ -19,6 +20,10 @@ public abstract class MenuService {
 	public Menu loadMenuById(Serializable id){
 		return menuDao.findOne(id);
 	}
+	
+	public List<Object[]> findParentByAjax(){
+		return menuDao.findParentByAjax();
+	}
 
 	public MenuDao getMenuDao() {
 		return menuDao;
@@ -26,5 +31,4 @@ public abstract class MenuService {
 	public void setMenuDao(MenuDao menuDao) {
 		this.menuDao = menuDao;
 	}
-	
 }

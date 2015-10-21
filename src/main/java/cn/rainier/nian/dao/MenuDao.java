@@ -75,5 +75,7 @@ public interface MenuDao extends  AbstractDao<Menu,Serializable>{
 	 */
 	@Query("select m from Menu m where m.url like ?1")
 	public Menu loadMenuByUrl(String url);
+	@Query("select id,name from Menu m where m.parentMenu = null")
+	public List<Object[]> findParentByAjax();
 }
 

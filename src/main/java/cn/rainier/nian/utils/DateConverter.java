@@ -6,8 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 public class DateConverter{
 	
@@ -20,7 +20,7 @@ public class DateConverter{
 	private static final String MONTH_PATTERN = "yyyy-MM";
 	
 	//type为Date，则转换为Date，否则转换为String
-	public static Object convert(Class type, Object value) {
+	public static <T> Object convert(Class<T> type, Object value) {
 		Object result = null;
 		if (type == Date.class) {
 			try {
@@ -49,8 +49,10 @@ public class DateConverter{
 		if (value instanceof String) {
 			result = DateUtils.parseDate((String) value, new String[] { DATE_PATTERN, DATETIME_PATTERN,
 					DATETIME_PATTERN_NO_SECOND, MONTH_PATTERN });
+
 			// all patterns failed, try a milliseconds constructor
 			if (result == null && StringUtils.isNotEmpty((String) value)) {
+
 				try {
 					result = new Date(new Long((String) value).longValue());
 				} catch (Exception e) {

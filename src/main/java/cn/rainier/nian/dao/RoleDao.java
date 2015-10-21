@@ -24,14 +24,14 @@ import cn.rainier.nian.model.User;
  * @Version:1.0<版本号>
  */
 public interface RoleDao extends AbstractDao<Role,Serializable>{
-	/**
-	 * @FunName: findUserByRole
-	 * @Description:  查询此角色下的所有用户
-	 * @param roleId
-	 * @return List<User>
-	 * @Author: 李年
-	 * @CreateDate: 2013-3-28
-	 */
+		/**
+		 * @FunName: findUserByRole
+		 * @Description:  查询此角色下的所有用户
+		 * @param roleId
+		 * @return List<User>
+		 * @Author: 李年
+		 * @CreateDate: 2013-3-28
+		 */
 		//@Query("select distinct u from User u,Role g where u.id in elements(g.users) and g.id = ?") //有用的
 		//@Query("select distinct u from User u,Role g where u in elements(g.users) and g.id = ?")		//有用的
 		@Query("select distinct u from User u join u.roles r where r.id = ? order by u.id desc")		//有用的
