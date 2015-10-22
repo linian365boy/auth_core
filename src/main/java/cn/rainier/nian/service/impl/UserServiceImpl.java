@@ -3,15 +3,21 @@ package cn.rainier.nian.service.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -30,6 +36,7 @@ import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
+
 import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Resource;
@@ -37,6 +44,7 @@ import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.OutCSVForUser;
 import cn.rainier.nian.service.UserService;
+import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
 
 public class UserServiceImpl implements UserService {
@@ -45,12 +53,18 @@ public class UserServiceImpl implements UserService {
 	private OutCSVForUser outCSV ;
 	@Autowired
 	private ResourceDao resourceDao ;
+	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
 	/**
 	 * 根据用户名查询用户，用户名唯一
 	 */
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
 		User user =  this.loadUserByName(username);
+		if(user!=null){
+			logger.info("用户名：{}，时间：{}，成功登录系统！",
+					user.getUsername(),DateConverter.convert(String.class, new Date()));
+		}
 		return user;
 	}
 	/**
