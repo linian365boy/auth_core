@@ -4,7 +4,7 @@ import java.io.File;
 
 public class FileUtil {
 	public synchronized static String getFileExtName(String filename){
-		int p = filename.indexOf(".");
+		int p = filename.lastIndexOf(".");
 		return filename.substring(p+1);
 	}
 	
