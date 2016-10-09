@@ -1,4 +1,4 @@
-package cn.rainier.nian.model;
+package cn.rainier.nian.helper;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -15,6 +15,8 @@ import org.springframework.security.web.access.intercept.DefaultFilterInvocation
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.AntPathRequestMatcher;
 import org.springframework.security.web.util.RequestMatcher;
+
+import cn.rainier.nian.model.Resource;
 
 
 @SuppressWarnings("deprecation")

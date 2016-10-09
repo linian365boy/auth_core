@@ -9,7 +9,7 @@ public class ResourceDaoImpl {
 	 * @FunName: getAllResource
 	 * @Description:  拿到所有资源
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 *//*
 	public List<Resource> getAllResource(){
@@ -49,7 +49,7 @@ public class ResourceDaoImpl {
 	 * @Description:  通过角色拿到可以显示的资源，授权时有用
 	 * @param name
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 *//*
 	public List<Resource> findResourceByParentId(Long menuId) {
@@ -70,7 +70,7 @@ public class ResourceDaoImpl {
 	 * @Description:  通过角色拿到所有资源
 	 * @param name
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 *//*
 	public List<Resource> findAllResourceByParentId(Long menuId) {
@@ -91,7 +91,7 @@ public class ResourceDaoImpl {
 	 * @Description:  通过角色拿到所有资源
 	 * @param name
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 *//*
 	public List<Resource> findResourceByRole(String name) {

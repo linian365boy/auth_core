@@ -1,6 +1,5 @@
 package cn.rainier.nian.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +13,7 @@ import cn.rainier.nian.model.User;
  * @Comments: 
  * @JDK Version Used:<JDK1.6>		
  * @Namespace: cn.rainier.nian.dao
- * @Author: 李年
+ * @Author: ln
  * @Create Date: 2013-3-28
  * @Modified By: 
  * @Modified Date: 
@@ -23,11 +22,23 @@ import cn.rainier.nian.model.User;
  */
 public interface UserDao {
 	/**
+	 * @FunName: findUserByRole
+	 * @Description:  查询此角色下的所有用户
+	 * @param roleId
+	 * @return List<User>
+	 * @Author: ln
+	 * @CreateDate: 2013-3-28
+	 */
+	//@Query("select distinct u from User u,Role g where u.id in elements(g.users) and g.id = ?") //有用的
+	//@Query("select distinct u from User u,Role g where u in elements(g.users) and g.id = ?")		//有用的
+	//@Query("select distinct u from User u join u.roles r where r.id = ? order by u.id desc")		//有用的
+	public List<User> findUserByRole(String roleId);
+	/**
 	 * @FunName: findByName
 	 * @Description:  通过用户名获得User对象
 	 * @param username
 	 * @return User
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
 	//@Query("select u from User u where u.username = :username")
@@ -37,7 +48,7 @@ public interface UserDao {
 	 * @Description:  模糊查询
 	 * @param username
 	 * @return List<User>
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
 	//@Query("select u from User u where u.username like :un")
@@ -47,19 +58,19 @@ public interface UserDao {
 	 * @Description:  得到密码（已经加密）
 	 * @param id
 	 * @return String
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
 	//@Query("select u.password from User u where u.id = ?")
-	public String getPasswordById(Serializable id);
+	public String getPasswordById(Integer id);
 	//@Modifying
 	//@Query("update User set password = ?2 where username = ?1")
-	public void changePassword(String username,String password);
+	public void changePassword(@Param("username") String username,@Param("password") String password);
 	/**
 	 * @FunName: unsubscribe
 	 * @Description:  通过username注销用户
 	 * @param username
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-8
 	 */
 	//@Modifying
@@ -69,22 +80,27 @@ public interface UserDao {
 	 * @FunName: unsubscribe
 	 * @Description:  通过User主键注销用户
 	 * @param id
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-8
 	 */
 	//@Modifying
 	//@Query("update User set accountNonLocked = false,lastCloseDate=NOW() where id = ?1")
-	public void unsubscribe(Serializable id);
+	public void unsubscribe(Integer id);
 	
-	public User save(User model);
+	public void save(User model);
 	
-	public void delete(Serializable id);
+	public void delete(Integer id);
 	
-	public void deleteInBatch(List<User> users);
+	public User findOne(Integer id);
+	/**
+	 * findAllCount:排除当前登录者，统计用户数
+	 * @author tanfan 
+	 * @param userId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public long findAllCount(Integer userId);
 	
-	public Long count();
+	public List<User> findList(@Param("loginId") Integer userId,@Param("start") int start,@Param("pageSize") Integer pageSize);
 	
-	public User findOne(Serializable id);
-	
-	public List<User> save(List<User> lists);
 }

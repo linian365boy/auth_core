@@ -21,7 +21,7 @@ import cn.rainier.nian.utils.PackageScan;
  * @Comments: 初始化，查找pojo是否被扩展
  * @JDK Version Used:<JDK1.6>		
  * @Namespace: cn.rainier.nian.init
- * @Author: 李年
+ * @Author: ln
  * @Create Date: 2013-3-28
  * @Modified By: 
  * @Modified Date: 
@@ -33,7 +33,7 @@ public class InitListener implements ServletContextListener{
 	 * @FunName: initComponent
 	 * @Description:  查找pojo是否被扩展
 	 * @throws IOException
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
 	public static void initComponent() throws IOException {

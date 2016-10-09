@@ -1,4 +1,4 @@
-package cn.rainier.nian.model;
+package cn.rainier.nian.helper;
 
 import java.util.ArrayList;
 import java.util.Collection;

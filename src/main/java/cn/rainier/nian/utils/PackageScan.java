@@ -18,7 +18,7 @@ import java.util.jar.JarFile;
  * @Comments: 扫描包
  * @JDK Version Used:<JDK1.6>		
  * @Namespace: cn.rainier.nian.utils
- * @Author: 李年
+ * @Author: ln
  * @Create Date: 2013-5-24
  * @Modified By: 
  * @Modified Date: 

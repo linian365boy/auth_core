@@ -6,7 +6,7 @@ package cn.rainier.nian.utils;
  * @Comments: 项目可能使用的变量
  * @JDK Version Used:<JDK1.6>		
  * @Namespace: cn.rainier.nian.utils
- * @Author: 李年
+ * @Author: ln
  * @Create Date: 2013-4-11
  * @Modified By: 
  * @Modified Date: 

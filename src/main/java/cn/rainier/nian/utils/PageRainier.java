@@ -8,7 +8,7 @@ import java.util.List;
  * @Comments: 分页组件
  * @JDK Version Used:<JDK1.6>		
  * @Namespace: cn.rainier.nian.utils
- * @Author: 李年
+ * @Author: ln
  * @Create Date: 2013-3-28
  * @Modified By: 
  * @Modified Date: 

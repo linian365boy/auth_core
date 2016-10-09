@@ -1,34 +1,25 @@
 package cn.rainier.nian.service;
 
-import java.io.Serializable;
 import java.util.List;
-
-import cn.rainier.nian.dao.MenuDao;
 import cn.rainier.nian.model.Menu;
 
-public abstract class MenuService {
-	private MenuDao menuDao;
+public interface MenuService {
 	
-	public void delMenu(Serializable id){
-		menuDao.delete(id);
-	}
+	public void delMenu(Integer id);
 	
-	public Menu saveMenu(Menu m){
-		return menuDao.save(m);
-	}
+	public boolean saveMenu(Menu m);
 	
-	public Menu loadMenuById(Serializable id){
-		return menuDao.findOne(id);
-	}
+	public Menu loadMenuById(Integer id);
 	
-	public List<Object[]> findParentByAjax(){
-		return menuDao.findParentByAjax();
-	}
+	public List<Menu> findParentByAjax();
 
-	public MenuDao getMenuDao() {
-		return menuDao;
-	}
-	public void setMenuDao(MenuDao menuDao) {
-		this.menuDao = menuDao;
-	}
+	/**
+	 * @FunName: loadMenuByResourceId
+	 * @Description:  查找权限资源所属的二级菜单
+	 * @param resourceId 资源Id
+	 * @return 所属的二级菜单
+	 * @Author: ln
+	 * @CreateDate: 2013-5-24
+	 */
+	public Menu loadMenuByResourceId(Integer resourceId);
 }

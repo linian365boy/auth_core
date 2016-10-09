@@ -1,6 +1,5 @@
 package cn.rainier.nian.service.impl;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.cache.NullUserCache;
+import org.springframework.stereotype.Service;
 
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Resource;
@@ -28,10 +28,14 @@ import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
 
+@Service
 public class UserServiceImpl implements UserService {
+	@Autowired
 	private UserDao userDao;
-	private UserCache userCache = new NullUserCache();
-	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	@Autowired
+	private UserCache userCache;
+	//private UserCache userCache = new NullUserCache();
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	/**
 	 * 根据用户名查询用户，用户名唯一
@@ -49,29 +53,13 @@ public class UserServiceImpl implements UserService {
 	 * 查询用户列表，根据Id排序，降序
 	 * @param userId 
 	 */
-	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Long userId, boolean flag) {
+	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Integer userId) {
 		PageRainier<User> page = null;
-		/*if(flag){
-			Page<User> tempPage = userDao.findAll(userSpecification(userId),new PageRequest(pageNo-1, pageSize,new Sort(Direction.DESC, "id")));
-			page = new PageRainier<User>(tempPage.getTotalElements(), pageNo, pageSize);
-			List<User> users = tempPage.getContent();
-			page.setResult(users);
-		}else{
-			page = new PageRainier<User>();
-			page.setResult(userDao.findAll(new Sort(Direction.ASC, "id")));
-		}*/
+		long count = userDao.findAllCount(userId);
+		page = new PageRainier<User>(count, pageNo, pageSize);
+		page.setResult(userDao.findList(userId,(pageNo-1)*pageSize,pageSize));
 		return page;
 	}
-	
-	/*private Specification<User> userSpecification(final Long id){
-		return new Specification<User>() {
-			@Override
-			public Predicate toPredicate(Root<User> root,
-					CriteriaQuery<?> query, CriteriaBuilder cb) {
-				return cb.notEqual(root.get("id"), id);
-			}
-		};
-	}*/
 	
 	public User loadUserByName(String userid) {
 		return userDao.findByName(userid);
@@ -80,26 +68,24 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 保存用户
 	 */
-	public User saveUser(User model) {
+	public boolean saveUser(User model) {
 		try{
 			if(model.getId()==null){	//新增用户
 				model.setPassword(new Md5PasswordEncoder().encodePassword(model.getPassword(), null));
 			}
-			User u =  userDao.save(model);
-			if(u!=null){
-				return u;
-			}
+			userDao.save(model);
+			return true;
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("保存用户报错",e);
 		}
-		return null;
+		return false;
 	}
 	/**
 	 * 删除用户
 	 */
-	public void deleteUser(User model) {
+	public void deleteUser(Integer userId) {
 		try{
-			userDao.delete(model);
+			userDao.delete(userId);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -107,7 +93,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据Id删除用户
 	 */
-	public void deleteUserById(Serializable id) {
+	public void deleteUserById(Integer id) {
 		try {
 			userDao.delete(id);
 		} catch (Exception e) {
@@ -117,7 +103,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据Id删除密码
 	 */
-	public String getPaswordById(Serializable id) {
+	public String getPaswordById(Integer id) {
 		return userDao.getPasswordById(id);
 	}
 
@@ -129,23 +115,6 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
-	/**
-	 * 批量添加
-	 */
-	public List<User> batchAdd(List<User> lists){
-		return userDao.save(lists);
-	}
-	
-	/**
-	 * 批量删除
-	 */
-	public void batchDel(List<User> users){
-		userDao.deleteInBatch(users);
-	}
-	
-	public Long findCount() {
-		return userDao.count();
-	}
 	/**
 	 * 模糊查询用户
 	 */
@@ -183,7 +152,7 @@ public class UserServiceImpl implements UserService {
 	 * @param oldPassword 旧密码
 	 * @param newPassword 新密码
 	 * @param currentUser 当前用户
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
 	public void changePassword(String oldPassword, String newPassword, Authentication currentUser){
@@ -215,14 +184,14 @@ public class UserServiceImpl implements UserService {
 	 * @FunName: resetPassword
 	 * @Description:  重置密码
 	 * @param username
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
 	public void resetPassword(String username){
 		userDao.changePassword(username, new Md5PasswordEncoder().encodePassword(username,null));
 	}
 
-	public User loadUserById(Serializable id) {
+	public User loadUserById(Integer id) {
 		return userDao.findOne(id);
 	}
 	/**
@@ -234,7 +203,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 注销用户
 	 */
-	public void unsubscribe(Serializable id) {
+	public void unsubscribe(Integer id) {
 		userDao.unsubscribe(id);
 	}
 	
@@ -251,8 +220,9 @@ public class UserServiceImpl implements UserService {
 		}
 		return authSet;
 	}
-	public PageRainier<User> findAllUser(Integer pageNo, Integer pageSize, Integer id, boolean flag) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	@Override
+	public List<User> findUserByRole(String roleId) {
+		return userDao.findUserByRole(roleId);
 	}
 }

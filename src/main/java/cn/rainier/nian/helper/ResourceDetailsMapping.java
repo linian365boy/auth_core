@@ -1,9 +1,11 @@
-package cn.rainier.nian.model;
+package cn.rainier.nian.helper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.springframework.jdbc.object.MappingSqlQuery;
+
+import cn.rainier.nian.model.Resource;
 
 public class ResourceDetailsMapping extends MappingSqlQuery<Resource> {
 	
