@@ -3,25 +3,12 @@ package cn.rainier.nian.service;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
-
 import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
-import cn.rainier.nian.utils.PageRainier;
 
 public abstract class RoleService {
 	private RoleDao roleDao;
-	private OutCSVForRole outCSV;
 	/**
 	 * @FunName: loadRoleByName
 	 * @Description:  根据角色名获取角色信息
@@ -73,13 +60,13 @@ public abstract class RoleService {
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public Specification<Role> findAllSpecification(){
+	/*public Specification<Role> findAllSpecification(){
 		return new Specification<Role>(){
 			public Predicate toPredicate(Root<Role> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
 				return cb.equal(root.get("defaultOrNo"), false);
 			}};
-	}
+	}*/
 	/**
 	 * @FunName: findAll
 	 * @Description:  查询全部角色，角色列表
@@ -90,7 +77,7 @@ public abstract class RoleService {
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<Role> findAll(Integer pageNo,Integer pageSize,boolean flag){
+	/*public PageRainier<Role> findAll(Integer pageNo,Integer pageSize,boolean flag){
 		PageRainier<Role> page = null;
 		if(flag){
 			Specification<Role> rs = findAllSpecification();
@@ -104,7 +91,7 @@ public abstract class RoleService {
 			page.setResult(roleDao.findAll(new Sort(Direction.DESC, "createDate")));
 			return page;
 		}
-	}
+	}*/
 	public RoleDao getRoleDao() {
 		return roleDao;
 	}
@@ -141,11 +128,5 @@ public abstract class RoleService {
 	 */
 	public List<User> findUserByRole(Serializable roleId){
 		return roleDao.findUserByRole(roleId);
-	}
-	public OutCSVForRole getOutCSV() {
-		return outCSV;
-	}
-	public void setOutCSV(OutCSVForRole outCSV) {
-		this.outCSV = outCSV;
 	}
 }

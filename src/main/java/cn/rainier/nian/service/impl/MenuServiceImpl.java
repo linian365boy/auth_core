@@ -4,17 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.service.MenuService;
 import cn.rainier.nian.utils.PageRainier;
 
-public class MenuServiceImpl extends MenuService{
+public class MenuServiceImpl extends MenuService {
 	/**
 	 * @FunName: findParentMenuByRole
 	 * @Description:  根据所属角色查找能访问的一级菜单
@@ -29,7 +24,7 @@ public class MenuServiceImpl extends MenuService{
 		if(!flag){//flag=false
 			parentM =  this.getMenuDao().findParentMenuByRole(roles);
 			for(Menu pare : parentM){
-				pare.setChildren(getChildldByParentAndRoles(pare.getId(),roles));
+				//pare.setChildren(getChildldByParentAndRoles(pare.getId(),roles));
 			}
 		}else{//flag=true
 			parentM = this.getMenuDao().findParentMenuByRole();
@@ -78,9 +73,10 @@ public class MenuServiceImpl extends MenuService{
 	 * @return
 	 */
 	public PageRainier<Menu> findAll(Integer pageNo, Integer pageSize) {
-		Page<Menu> tempPage = this.getMenuDao().findAll(new PageRequest(pageNo-1,pageSize,new Sort(Direction.DESC,"id","priority")));
-		PageRainier<Menu> page = new PageRainier<Menu>(tempPage.getTotalElements(),pageNo,pageSize);
-		page.setResult(tempPage.getContent());
+		//Page<Menu> tempPage = this.getMenuDao().findAll(new PageRequest(pageNo-1,pageSize,new Sort(Direction.DESC,"id","priority")));
+		long count = this.getMenuDao().findAllCount();
+		PageRainier<Menu> page = new PageRainier<Menu>(count);
+		page.setResult(this.getMenuDao().findList(pageNo,pageSize));
 		return page;
 	}
 }

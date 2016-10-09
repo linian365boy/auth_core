@@ -47,7 +47,6 @@ public class PageRainier<T> {
 	public PageRainier(){}
 
 	public PageRainier(Long totalRowNum, int currentPageIndex, int pageSize) {
-		super();
 		this.totalRowNum = Math.max(0L, totalRowNum);
 		this.pageSize = Math.max(1, pageSize);
 		this.totalPageNum = Math.max(1, (int) Math.ceil(1.0 * this.totalRowNum
@@ -73,6 +72,17 @@ public class PageRainier<T> {
 	}
 
 	
+	public PageRainier(Long totalRowNum) {
+		this.totalRowNum = Math.max(0L, totalRowNum);
+		this.totalPageNum = Math.max(1, (int) Math.ceil(1.0 * this.totalRowNum
+				/ this.pageSize));
+
+		this.currentPageIndex = Math.min(Math.max(1, currentPageIndex),
+				totalPageNum);
+		this.hasLast = this.hasNext = (currentPageIndex < totalPageNum);
+		this.endPageIndex = Math.min(endPageIndex, totalPageNum);
+	}
+
 	public Long getTotalRowNum() {
 		return totalRowNum;
 	}

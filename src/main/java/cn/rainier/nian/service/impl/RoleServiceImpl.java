@@ -1,13 +1,10 @@
 package cn.rainier.nian.service.impl;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.service.RoleService;
+import cn.rainier.nian.utils.PageRainier;
 
 public class RoleServiceImpl extends RoleService{
 	/**
@@ -30,7 +27,7 @@ public class RoleServiceImpl extends RoleService{
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public void exportToCSV(List<Role> roles, String fileName,
+	/*public void exportToCSV(List<Role> roles, String fileName,
 			String[] headers, HttpServletResponse response) {
 		PrintWriter out = null;
 		try {
@@ -44,6 +41,10 @@ public class RoleServiceImpl extends RoleService{
 				out.close();
 			}
 		}
+	}*/
+
+	public PageRainier<Role> findAll(Integer pageNo, Integer pageSize, boolean b) {
+		return null;
 	}
 	
 	/**
@@ -56,7 +57,7 @@ public class RoleServiceImpl extends RoleService{
 	 * @Author: 李年
 	 * @CreateDate: 2013-6-6
 	 */
-	public void exportToCSVExNoDisplay(List<Role> roles, String fileName,
+	/*public void exportToCSVExNoDisplay(List<Role> roles, String fileName,
 			String[] headers, HttpServletResponse response){
 		PrintWriter out = null;
 		try{
@@ -70,7 +71,7 @@ public class RoleServiceImpl extends RoleService{
 				out.close();
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * @FunName: exportToCSV
@@ -83,7 +84,7 @@ public class RoleServiceImpl extends RoleService{
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public void exportToCSV(List<Role> roles, String fileName,
+	/*public void exportToCSV(List<Role> roles, String fileName,
 			String[] headers, HttpServletResponse response, Long l) {
 		if(l==null){
 			exportToCSV(roles,fileName,headers,response);
@@ -101,5 +102,5 @@ public class RoleServiceImpl extends RoleService{
 				}
 			}
 		}
-	}
+	}*/
 }

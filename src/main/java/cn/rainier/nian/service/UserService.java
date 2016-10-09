@@ -3,9 +3,6 @@ package cn.rainier.nian.service;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import cn.rainier.nian.model.User;
@@ -104,7 +101,7 @@ public interface UserService extends UserDetailsService {
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<User> findUserByLike(Specification<User> speci, String field, String condition, Integer pageNo, Integer pageSize);
+	//public PageRainier<User> findUserByLike(Specification<User> speci, String field, String condition, Integer pageNo, Integer pageSize);
 	/**
 	 * @FunName: findUserByRoleLike
 	 * @Description:  根据用户的角色模糊查询
@@ -115,7 +112,7 @@ public interface UserService extends UserDetailsService {
 	 * @Author: 李年
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<User> findUserByRoleLike(String role,Integer pageNo,Integer pageSize);
+	//public PageRainier<User> findUserByRoleLike(String role,Integer pageNo,Integer pageSize);
 	/**
 	 * @FunName: loadUserById
 	 * @Description:  根据用户ID加载用户对象
@@ -141,16 +138,4 @@ public interface UserService extends UserDetailsService {
 	 * @CreateDate: 2013-5-24
 	 */
 	public void unsubscribe(Serializable id);
-	/**
-	 * @FunName: exportToCSV
-	 * @Description:  用户列表导出csv
-	 * @param users
-	 * @param fileName
-	 * @param headers
-	 * @param response
-	 * @Author: 李年
-	 * @CreateDate: 2013-5-24
-	 */
-	public void exportToCSV(List<User> users, String fileName,
-			String[] headers, HttpServletResponse response);
 }

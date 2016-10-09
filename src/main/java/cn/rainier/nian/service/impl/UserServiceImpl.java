@@ -1,30 +1,14 @@
 package cn.rainier.nian.service.impl;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -37,12 +21,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
 
-import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Resource;
-import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
-import cn.rainier.nian.service.OutCSVForUser;
 import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
@@ -50,9 +31,6 @@ import cn.rainier.nian.utils.PageRainier;
 public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	private UserCache userCache = new NullUserCache();
-	private OutCSVForUser outCSV ;
-	@Autowired
-	private ResourceDao resourceDao ;
 	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	/**
@@ -73,7 +51,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Long userId, boolean flag) {
 		PageRainier<User> page = null;
-		if(flag){
+		/*if(flag){
 			Page<User> tempPage = userDao.findAll(userSpecification(userId),new PageRequest(pageNo-1, pageSize,new Sort(Direction.DESC, "id")));
 			page = new PageRainier<User>(tempPage.getTotalElements(), pageNo, pageSize);
 			List<User> users = tempPage.getContent();
@@ -81,11 +59,11 @@ public class UserServiceImpl implements UserService {
 		}else{
 			page = new PageRainier<User>();
 			page.setResult(userDao.findAll(new Sort(Direction.ASC, "id")));
-		}
+		}*/
 		return page;
 	}
 	
-	private Specification<User> userSpecification(final Long id){
+	/*private Specification<User> userSpecification(final Long id){
 		return new Specification<User>() {
 			@Override
 			public Predicate toPredicate(Root<User> root,
@@ -93,7 +71,7 @@ public class UserServiceImpl implements UserService {
 				return cb.notEqual(root.get("id"), id);
 			}
 		};
-	}
+	}*/
 	
 	public User loadUserByName(String userid) {
 		return userDao.findByName(userid);
@@ -171,15 +149,15 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 模糊查询用户
 	 */
-	public PageRainier<User> findUserByLike(Specification<User> speci,String field,String condition,Integer pageNo,Integer pageSize){
+	/*public PageRainier<User> findUserByLike(Specification<User> speci,String field,String condition,Integer pageNo,Integer pageSize){
 		Page<User> tempPage = userDao.findAll(speci, 
 				new PageRequest(pageNo-1,pageSize,new Sort(Direction.DESC,"id")));
 		PageRainier<User> page = new PageRainier<User>(tempPage.getTotalElements(),pageNo,pageSize);
 		page.setResult(tempPage.getContent());
 		return page;
-	}
+	}*/
 	
-	private Specification<User> findUserByRoleLikeSpeci(final String role){
+	/*private Specification<User> findUserByRoleLikeSpeci(final String role){
 		return new Specification<User>() {
 			public Predicate toPredicate(Root<User> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -188,17 +166,17 @@ public class UserServiceImpl implements UserService {
 				return cb.like(join.<String>get("desc"), role);
 			}
 		};
-	}
+	}*/
 	/**
 	 * 根据角色模糊查询用户
 	 */
-	public PageRainier<User> findUserByRoleLike(final String role,Integer pageNo,Integer pageSize){
+	/*public PageRainier<User> findUserByRoleLike(final String role,Integer pageNo,Integer pageSize){
 		Specification<User> speci = findUserByRoleLikeSpeci(role);
 		Page<User> tempPage = userDao.findAll(speci, new PageRequest(pageNo-1,pageSize));
 		PageRainier<User> page = new PageRainier<User>(tempPage.getTotalElements(),pageNo,pageSize);
 		page.setResult(tempPage.getContent());
 		return page;
-	}
+	}*/
 	/**
 	 * @FunName: changePassword
 	 * @Description:  修改密码
@@ -259,31 +237,6 @@ public class UserServiceImpl implements UserService {
 	public void unsubscribe(Serializable id) {
 		userDao.unsubscribe(id);
 	}
-	/**
-	 * 导出csv文件中
-	 */
-	public void exportToCSV(List<User> users, String fileName,
-			String[] headers, HttpServletResponse response){
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-			outCSV.exportCSV(headers, users, out);
-			out.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally{
-			if(out!=null){
-				out.close();
-			}
-		}
-	}
-	
-	public OutCSVForUser getOutCSV() {
-		return outCSV;
-	}
-	public void setOutCSV(OutCSVForUser outCSV) {
-		this.outCSV = outCSV;
-	}
 	
 	// 取得用户的权限
 	private Set<GrantedAuthority> obtionGrantedAuthorities(User user) {
@@ -297,5 +250,9 @@ public class UserServiceImpl implements UserService {
 			authSet.add(new SimpleGrantedAuthority("ROLE_" + res.getRes_string()));
 		}
 		return authSet;
+	}
+	public PageRainier<User> findAllUser(Integer pageNo, Integer pageSize, Integer id, boolean flag) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

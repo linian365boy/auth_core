@@ -1,36 +1,20 @@
 package cn.rainier.nian.model;
 
 import java.io.Serializable;
-import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import cn.rainier.nian.model.component.MenuComponent;
-
-@Entity
-@Table(name="MENU")
-public class Menu extends IdEntity implements Serializable{
+public class Menu implements Serializable{
 	/**
-	 * 
+	 * 序列化
 	 */
 	private static final long serialVersionUID = 1L;
+	private Integer id;
 	private String name;			//菜单名，展示在菜单栏上的信息
 	private String mark;			//权限分配时显示的字，可能跟name一致，也可能不一致，只是为了分配权限时看得明白，清楚。
 	private String url;				//点击菜单的链接
 	private Integer priority;		//菜单展示的优先级
-	private Menu parentMenu;		//父菜单
-	private List<Menu> children;	//父菜单下的所有子菜单
-	private List<Role> roles;		//能操作此菜单的所有角色
-	
-	//扩展使用
-	private MenuComponent menuComponent;
+	private Integer pId;		//父菜单
 	
 	public Menu(){
 	}
@@ -47,21 +31,6 @@ public class Menu extends IdEntity implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH })
-	@JoinColumn(name="pid")
-	public Menu getParentMenu() {
-		return parentMenu;
-	}
-	public void setParentMenu(Menu parentMenu) {
-		this.parentMenu = parentMenu;
-	}
-	@OneToMany(mappedBy="parentMenu",cascade={CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REMOVE})
-	public List<Menu> getChildren() {
-		return children;
-	}
-	public void setChildren(List<Menu> children) {
-		this.children = children;
-	}
 	public String getUrl() {
 		return url;
 	}
@@ -74,26 +43,26 @@ public class Menu extends IdEntity implements Serializable{
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
-	@ManyToMany(mappedBy="menus",cascade=CascadeType.PERSIST)
-	public List<Role> getRoles() {
-		return roles;
+	public Integer getId() {
+		return id;
 	}
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
+
+	public Integer getpId() {
+		return pId;
+	}
+
+	public void setpId(Integer pId) {
+		this.pId = pId;
+	}
+
 	@Override
 	public String toString() {
-		return "id："+this.id+"name："+this.name+"parentMenu：";
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
-	@Embedded
-	public MenuComponent getMenuComponent() {
-		return menuComponent;
-	}
-
-	public void setMenuComponent(MenuComponent menuComponent) {
-		this.menuComponent = menuComponent;
-	}
-
 	public String getMark() {
 		return mark;
 	}

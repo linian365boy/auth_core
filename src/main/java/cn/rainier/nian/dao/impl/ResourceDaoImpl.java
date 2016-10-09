@@ -1,31 +1,17 @@
 package cn.rainier.nian.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import cn.rainier.nian.dao.ResourceDao;
-import cn.rainier.nian.model.Menu;
-import cn.rainier.nian.model.Resource;
-import cn.rainier.nian.model.Role;
-
-public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
-	private DataSource ds;
+public class ResourceDaoImpl {
+	/*private DataSource ds;
 	public void setDs(DataSource dataSource){
 		super.setDataSource(dataSource);
 	}
-	/**
+	*//**
 	 * @FunName: getAllResource
 	 * @Description:  拿到所有资源
 	 * @return
 	 * @Author: 李年
 	 * @CreateDate: 2013-3-28
-	 */
+	 *//*
 	public List<Resource> getAllResource(){
 		List<Resource> list = null;
 		String sql = "select * from resource order by priority desc";
@@ -58,14 +44,14 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 		});
 		return roles;
 	}
-	/**
+	*//**
 	 * @FunName: findResourceByRole
 	 * @Description:  通过角色拿到可以显示的资源，授权时有用
 	 * @param name
 	 * @return
 	 * @Author: 李年
 	 * @CreateDate: 2013-3-28
-	 */
+	 *//*
 	public List<Resource> findResourceByParentId(Long menuId) {
 		String sql = "select r.id,r.name,r.descn from resource r where r.menuId = ? and r.display is true order by priority desc";
 		return this.getJdbcTemplate().query(sql,new Long[]{menuId},new RowMapper<Resource>(){
@@ -79,14 +65,14 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 			}
 		});
 	}
-	/**
+	*//**
 	 * @FunName: findResourceByRole
 	 * @Description:  通过角色拿到所有资源
 	 * @param name
 	 * @return
 	 * @Author: 李年
 	 * @CreateDate: 2013-3-28
-	 */
+	 *//*
 	public List<Resource> findAllResourceByParentId(Long menuId) {
 		String sql = "select r.id,r.name,r.descn from resource r where r.menuId = ? order by priority desc";
 		return this.getJdbcTemplate().query(sql,new Long[]{menuId},new RowMapper<Resource>(){
@@ -100,14 +86,14 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 			}
 		});
 	}
-	/**
+	*//**
 	 * @FunName: findResourceByRole
 	 * @Description:  通过角色拿到所有资源
 	 * @param name
 	 * @return
 	 * @Author: 李年
 	 * @CreateDate: 2013-3-28
-	 */
+	 *//*
 	public List<Resource> findResourceByRole(String name) {
 		String sql = "select rr.resourceId from role_resource rr where rr.roleId = ?";
 		return this.getJdbcTemplate().query(sql, new String[]{name},new RowMapper<Resource>(){
@@ -149,5 +135,5 @@ public class ResourceDaoImpl extends JdbcDaoSupport implements ResourceDao{
 	}
 	public DataSource getDs() {
 		return ds;
-	}
+	}*/
 }

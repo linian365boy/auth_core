@@ -4,7 +4,7 @@
 
   <groupId>com.rainier.permission</groupId>
   <artifactId>auth_core</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>auth_core</name>
@@ -26,18 +26,6 @@
 	</dependency>
 	<!-- aspect end -->
 
-	<!-- hibernate start -->
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-entitymanager</artifactId>
-		<version>4.1.4.Final</version>
-	</dependency>
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-ehcache</artifactId>
-		<version>4.1.2.Final</version>
-	</dependency>
-	<!-- hibernate end -->
 	<!-- spring start -->
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -52,21 +40,6 @@
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-aspects</artifactId>
-		<version>${org.springframework-version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-jdbc</artifactId>
-		<version>${org.springframework-version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-instrument</artifactId>
-		<version>${org.springframework-version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-instrument-tomcat</artifactId>
 		<version>${org.springframework-version}</version>
 	</dependency>
 	<dependency>
@@ -102,18 +75,6 @@
 		<version>${org.springframework-version}</version>
 	</dependency>
 
-	<dependency>
-		<groupId>org.springframework.data</groupId>
-		<artifactId>spring-data-commons-core</artifactId>
-		<version>1.3.0.RELEASE</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.springframework.data</groupId>
-		<artifactId>spring-data-jpa</artifactId>
-		<version>1.1.0.RELEASE</version>
-	</dependency>
-	
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-webmvc</artifactId>
@@ -192,14 +153,6 @@
 	</dependency>
 	<!-- commons dbcp start -->
 
-	<!-- jpa start -->
-	<dependency>
-		<groupId>org.hibernate.javax.persistence</groupId>
-		<artifactId>hibernate-jpa-2.0-api</artifactId>
-		<version>1.0.1.Final</version>
-	</dependency>
-	<!-- jpa end -->
-
 	<!-- servlet-api start -->
 	<dependency>
 		<groupId>org.mortbay.jetty</groupId>
@@ -237,6 +190,26 @@
 		<groupId>javax.mail</groupId>
 		<artifactId>mail</artifactId>
 		<version>1.4.7</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+	    <version>1.3.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.4.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	    <version>1.7.21</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-core</artifactId>
+	    <version>2.5</version>
 	</dependency>
     <dependency>
       <groupId>junit</groupId>
