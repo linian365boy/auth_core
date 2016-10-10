@@ -1,15 +1,12 @@
 package cn.rainier.nian.service.impl;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.service.ResourceService;
 
-@Service
 public class ResourceServiceImpl implements ResourceService{
-	@Autowired
 	private ResourceDao resourceDao;
 	/**
 	 * 通过父菜单得到资源

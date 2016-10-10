@@ -1,8 +1,6 @@
 package cn.rainier.nian.dao;
 
 import java.util.List;
-
-import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Resource;
 
 /**
@@ -66,4 +64,12 @@ public interface ResourceDao {
 	 */
 	public Resource loadResourceByResourceId(Integer id);
 	
+	/**
+	 * @FunName: getAllResource
+	 * @Description:  拿到所有资源
+	 * @return
+	 * @Author: ln
+	 * @CreateDate: 2013-3-28
+	 */
+	public List<Resource> getAllTypeResource(String type);
 }

@@ -2,21 +2,15 @@ package cn.rainier.nian.service.impl;
 
 import java.util.List;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cn.rainier.nian.dao.MenuDao;
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.service.MenuService;
 import cn.rainier.nian.utils.PageRainier;
 
-@Service
 public class MenuServiceImpl implements MenuService {
-	@Autowired
 	private MenuDao menuDao;
 	private static final Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
 	/**
@@ -33,7 +27,7 @@ public class MenuServiceImpl implements MenuService {
 		if(!flag){//flag=false
 			parentM =  menuDao.findParentMenuByRole(roles);
 			for(Menu pare : parentM){
-				//pare.setChildren(getChildldByParentAndRoles(pare.getId(),roles));
+				pare.setChildren(menuDao.getChildldByParentAndRoles(pare.getId(),roles));
 			}
 		}else{//flag=true
 			parentM = menuDao.findParentMenu();

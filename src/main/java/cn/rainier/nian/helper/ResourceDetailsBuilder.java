@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.ConfigAttributeEditor;
 import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
@@ -16,37 +14,31 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.AntPathRequestMatcher;
 import org.springframework.security.web.util.RequestMatcher;
 
+import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.model.Resource;
 
 
 @SuppressWarnings("deprecation")
 public class ResourceDetailsBuilder {
-    private DataSource dataSource;
+	private ResourceDao resourceDao;
     
-    public ResourceDetailsBuilder(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public FilterInvocationSecurityMetadataSource createUrlSource() {
+        return new DefaultFilterInvocationSecurityMetadataSource(this.buildRequestMap());
     }
 
-    public FilterInvocationSecurityMetadataSource createUrlSource(String... query) {
-        return new DefaultFilterInvocationSecurityMetadataSource(this.buildRequestMap(query));
-    }
-
-    public MethodSecurityMetadataSource createMethodSource(String... query) {
-        return new MapBasedMethodSecurityMetadataSource(this.buildMethodMap(query));
+    public MethodSecurityMetadataSource createMethodSource() {
+        return new MapBasedMethodSecurityMetadataSource(this.buildMethodMap());
     }
 
     @SuppressWarnings("unchecked")
-	protected LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> buildRequestMap(
-        String... query) {
+	protected LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> buildRequestMap() {
         LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> requestMap = null;
         requestMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
 
         ConfigAttributeEditor editor = new ConfigAttributeEditor();
         Map<String, String> resourceMaps = new LinkedHashMap<String,String>();
-        for(int i=0;i<query.length;i++){
-        	Map<String, String> resourceMap = this.findResources(query[i]);
-        	resourceMaps.putAll(resourceMap);
-        }
+        Map<String, String> resourceMap = this.getAllResource("URL");
+        resourceMaps.putAll(resourceMap);
         
         for (Map.Entry<String, String> entry : resourceMaps.entrySet()) {
         		RequestMatcher key = new AntPathRequestMatcher(entry.getKey());
@@ -59,17 +51,15 @@ public class ResourceDetailsBuilder {
     }
 
     @SuppressWarnings("unchecked")
-	protected Map<String, List<ConfigAttribute>> buildMethodMap(
-        String... query) {
+	protected Map<String, List<ConfigAttribute>> buildMethodMap() {
         Map<String, List<ConfigAttribute>> methodMap = null;
         methodMap = new LinkedHashMap<String, List<ConfigAttribute>>();
 
         ConfigAttributeEditor editor = new ConfigAttributeEditor();
         Map<String, String> resourceMaps = new LinkedHashMap<String,String>();
-        for(int i=0;i<query.length;i++){
-        	Map<String, String> resourceMap = this.findResources(query[i]);
-        	resourceMaps.putAll(resourceMap);
-        }
+        Map<String, String> resourceMap = this.getAllResource("METHOD");
+        resourceMaps.putAll(resourceMap);
+        
         for (Map.Entry<String, String> entry : resourceMaps.entrySet()) {
             editor.setAsText(entry.getValue());
             methodMap.put(entry.getKey(),
@@ -79,14 +69,12 @@ public class ResourceDetailsBuilder {
         return methodMap;
     }
 
-    protected Map<String, String> findResources(String query) {
-    		ResourceDetailsMapping resourceDetailsMapping = new ResourceDetailsMapping(dataSource,query);
+    protected Map<String, String> getAllResource(String type) {
         Map<String, String> resourceMap = new LinkedHashMap<String, String>();
-        List<Resource> resources = resourceDetailsMapping.execute();
-
+        List<Resource> resources = resourceDao.getAllTypeResource(type);
         for (Resource resource : resources) {
-            String guName = resource.getRuName();
-            String res_string = resource.getRes_string();
+            String guName = resource.getRoleName();
+            String res_string = resource.getResString();
 
             if (resourceMap.containsKey(res_string)) {
                 String value = resourceMap.get(res_string);
@@ -95,7 +83,6 @@ public class ResourceDetailsBuilder {
                 resourceMap.put(res_string, guName);
             }
         }
-
         return resourceMap;
     }
 }

@@ -1,6 +1,8 @@
 package cn.rainier.nian.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -15,6 +17,8 @@ public class Menu implements Serializable {
 	private Integer parentId; // 父菜单
 	private Integer priority; // 菜单展示的优先级
 	private String url; // 点击菜单的链接
+	
+	private transient List<Menu> children;
 
 	public Menu() {
 	}
@@ -76,5 +80,13 @@ public class Menu implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+	public void setChildren(List<Menu> children) {
+		this.children = children;
+	}
+
+	public List<Menu> getChildren() {
+		return children;
 	}
 }

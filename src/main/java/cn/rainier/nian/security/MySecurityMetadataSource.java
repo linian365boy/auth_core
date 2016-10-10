@@ -42,9 +42,9 @@ public class MySecurityMetadataSource implements
 				// 关联代码：applicationContext-security.xml
 				// 关联代码：com.huaxin.security.MyUserDetailServiceImpl#obtionGrantedAuthorities
 				ConfigAttribute configAttribute = new SecurityConfig("ROLE_"
-						+ resource.getRuName());
+						+ resource.getRoleName());
 				configAttributes.add(configAttribute);
-				resourceMap.put(resource.getRes_string(), configAttributes);
+				resourceMap.put(resource.getResString(), configAttributes);
 			}
 		}
 	}

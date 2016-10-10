@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Resource;
@@ -28,13 +26,9 @@ import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
 
-@Service
 public class UserServiceImpl implements UserService {
-	@Autowired
 	private UserDao userDao;
-	@Autowired
 	private UserCache userCache;
-	//private UserCache userCache = new NullUserCache();
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	/**
@@ -174,12 +168,6 @@ public class UserServiceImpl implements UserService {
         return newAuthentication;
     }
 	
-	public UserCache getUserCache() {
-		return userCache;
-	}
-	public void setUserCache(UserCache userCache) {
-		this.userCache = userCache;
-	}
 	/**
 	 * @FunName: resetPassword
 	 * @Description:  重置密码
@@ -216,7 +204,7 @@ public class UserServiceImpl implements UserService {
 			// TODO:ZZQ 用户可以访问的资源名称（或者说用户所拥有的权限） 注意：必须"ROLE_"开头
 			// 关联代码：applicationContext-security.xml
 			// 关联代码：com.huaxin.security.MySecurityMetadataSource#loadResourceDefine
-			authSet.add(new SimpleGrantedAuthority("ROLE_" + res.getRes_string()));
+			authSet.add(new SimpleGrantedAuthority("ROLE_" + res.getResString()));
 		}
 		return authSet;
 	}
