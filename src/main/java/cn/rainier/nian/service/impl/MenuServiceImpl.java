@@ -64,7 +64,6 @@ public class MenuServiceImpl implements MenuService {
 	 * @return
 	 */
 	public PageRainier<Menu> findAll(Integer pageNo, Integer pageSize) {
-		//Page<Menu> tempPage = this.getMenuDao().findAll(new PageRequest(pageNo-1,pageSize,new Sort(Direction.DESC,"id","priority")));
 		long count = menuDao.findAllCount();
 		PageRainier<Menu> page = new PageRainier<Menu>(count);
 		page.setResult(menuDao.findList((pageNo-1)*pageSize,pageSize));

@@ -30,7 +30,7 @@ public class User implements UserDetails{
 	/**
 	 * 所属角色
 	 */
-	private Set<Role> roles;	
+	private Set<Role> roles;
 	
 	public void setUsername(String username) {
 		this.username = username;

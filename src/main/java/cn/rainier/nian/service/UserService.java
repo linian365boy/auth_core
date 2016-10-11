@@ -2,6 +2,7 @@ package cn.rainier.nian.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import cn.rainier.nian.model.User;
@@ -104,4 +105,8 @@ public interface UserService extends UserDetailsService {
 	 * @CreateDate: 2013-5-24
 	 */
 	public List<User> findUserByRole(String roleId);
+	
+	public void resetPassword(String username);
+	
+	public void changePassword(String oldPassword, String password, Authentication authentication);
 }

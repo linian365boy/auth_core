@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
+import cn.rainier.nian.utils.PageRainier;
 
 public interface RoleService {
 	/**
@@ -87,4 +88,8 @@ public interface RoleService {
 	 * @CreateDate: 2013-5-24
 	 */
 	public Role findDefault();
+	
+	public List<Role> findAllByAjax();
+	
+	public PageRainier<Role> findAll(Integer pageNo, Integer pageSize, boolean b);
 }

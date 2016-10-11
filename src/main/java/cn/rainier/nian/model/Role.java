@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Role implements Serializable {
 	private static final long serialVersionUID = -3498056750436845009L;
 	private String name;				//角色名
-	private String desc;				//角色描述
+	private String describes;				//角色描述
 	private String remarks;				//备注
 	private boolean defaultOrNo;		//是否默认角色
 	private Date createDate;			//创建角色日期
@@ -17,9 +17,9 @@ public class Role implements Serializable {
 	public Role(){
 	}
 	
-	public Role(String name, String desc) {
+	public Role(String name, String describes) {
 		this.name = name;
-		this.desc = desc;
+		this.describes = describes;
 	}
 
 	public String getName() {
@@ -28,13 +28,15 @@ public class Role implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
 	
+	public String getDescribes() {
+		return describes;
+	}
+
+	public void setDescribes(String describes) {
+		this.describes = describes;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
