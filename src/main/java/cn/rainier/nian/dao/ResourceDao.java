@@ -1,6 +1,7 @@
 package cn.rainier.nian.dao;
 
 import java.util.List;
+
 import cn.rainier.nian.model.Resource;
 
 /**
@@ -72,4 +73,13 @@ public interface ResourceDao {
 	 * @CreateDate: 2013-3-28
 	 */
 	public List<Resource> getAllTypeResource(String type);
+	
+	/**
+	 * findResourceByRole:根据用户角色，获取所有可以访问的资源
+	 * @author tanfan 
+	 * @param roles
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	//public List<Resource> findResourceByRole(Set<Role> roles);
 }

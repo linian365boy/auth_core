@@ -85,7 +85,7 @@ public interface UserDao {
 	 */
 	//@Modifying
 	//@Query("update User set accountNonLocked = false,lastCloseDate=NOW() where id = ?1")
-	public void unsubscribe(Integer id);
+	//public void unsubscribe(Integer id);
 	
 	public void save(User model);
 	

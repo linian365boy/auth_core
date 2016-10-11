@@ -38,11 +38,8 @@ public class MySecurityMetadataSource implements
 			List<Resource> resources = this.resourceDao.getAllResource();
 			for (Resource resource : resources) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-				// TODO:ZZQ 通过资源名称来表示具体的权限 注意：必须"ROLE_"开头
-				// 关联代码：applicationContext-security.xml
-				// 关联代码：com.huaxin.security.MyUserDetailServiceImpl#obtionGrantedAuthorities
-				ConfigAttribute configAttribute = new SecurityConfig("ROLE_"
-						+ resource.getRoleName());
+				//通过资源名称来表示具体的权限 注意：必须"ROLE_"开头
+				ConfigAttribute configAttribute = new SecurityConfig("ROLE_"+resource.getRoleName());
 				configAttributes.add(configAttribute);
 				resourceMap.put(resource.getResString(), configAttributes);
 			}

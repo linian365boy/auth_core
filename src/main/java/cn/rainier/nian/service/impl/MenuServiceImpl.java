@@ -92,4 +92,10 @@ public class MenuServiceImpl implements MenuService {
 	public List<Menu> findParentByAjax() {
 		return menuDao.findParentByAjax();
 	}
+	public MenuDao getMenuDao() {
+		return menuDao;
+	}
+	public void setMenuDao(MenuDao menuDao) {
+		this.menuDao = menuDao;
+	}
 }

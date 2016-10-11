@@ -94,15 +94,7 @@ public interface UserService extends UserDetailsService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public void unsubscribe(User model);
-	/**
-	 * @FunName: unsubscribe
-	 * @Description:  根据用户Id注销
-	 * @param id
-	 * @Author: ln
-	 * @CreateDate: 2013-5-24
-	 */
-	public void unsubscribe(Integer id);
+	public boolean unsubscribe(String username);
 	/**
 	 * @FunName: findUserByRole
 	 * @Description:  查询某角色下的用户对象

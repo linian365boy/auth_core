@@ -84,6 +84,12 @@ public class RoleServiceImpl implements RoleService{
 	public Role findDefault() {
 		return roleDao.findDefaultRole();
 	}
+	public RoleDao getRoleDao() {
+		return roleDao;
+	}
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
 	
 	/**
 	 * @FunName: exportToCSVExNoDisplay
@@ -141,4 +147,5 @@ public class RoleServiceImpl implements RoleService{
 			}
 		}
 	}*/
+	
 }

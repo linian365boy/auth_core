@@ -1,9 +1,7 @@
 package cn.rainier.nian.service.impl;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,15 +10,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import cn.rainier.nian.dao.UserDao;
-import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.DateConverter;
@@ -185,32 +179,24 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 注销用户
 	 */
-	public void unsubscribe(User model) {
-		userDao.unsubscribe(model.getUsername());
-	}
-	/**
-	 * 注销用户
-	 */
-	public void unsubscribe(Integer id) {
-		userDao.unsubscribe(id);
-	}
-	
-	// 取得用户的权限
-	private Set<GrantedAuthority> obtionGrantedAuthorities(User user) {
-		//List<Resource> resources = resourceDao.findResourceByRole(user.getRoles());
-		List<Resource> resources = null;
-		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
-		for (Resource res : resources) {
-			// TODO:ZZQ 用户可以访问的资源名称（或者说用户所拥有的权限） 注意：必须"ROLE_"开头
-			// 关联代码：applicationContext-security.xml
-			// 关联代码：com.huaxin.security.MySecurityMetadataSource#loadResourceDefine
-			authSet.add(new SimpleGrantedAuthority("ROLE_" + res.getResString()));
+	public boolean unsubscribe(String username) {
+		try{
+			userDao.unsubscribe(username);
+			return true;
+		}catch(Exception e){
+			logger.error("用户注销失败！",e);
 		}
-		return authSet;
+		return false;
 	}
 	
 	@Override
 	public List<User> findUserByRole(String roleId) {
 		return userDao.findUserByRole(roleId);
+	}
+	public UserCache getUserCache() {
+		return userCache;
+	}
+	public void setUserCache(UserCache userCache) {
+		this.userCache = userCache;
 	}
 }

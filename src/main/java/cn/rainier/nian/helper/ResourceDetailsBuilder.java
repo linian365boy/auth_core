@@ -85,4 +85,12 @@ public class ResourceDetailsBuilder {
         }
         return resourceMap;
     }
+
+	public ResourceDao getResourceDao() {
+		return resourceDao;
+	}
+
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
+	}
 }

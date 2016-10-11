@@ -37,4 +37,10 @@ public class ResourceServiceImpl implements ResourceService{
 	public Resource loadResourceByResource(Integer id) {
 		return resourceDao.loadResourceByResourceId(id);
 	}
+	public ResourceDao getResourceDao() {
+		return resourceDao;
+	}
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
+	}
 }

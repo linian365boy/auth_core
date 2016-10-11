@@ -5,11 +5,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class User implements UserDetails{
@@ -25,6 +24,8 @@ public class User implements UserDetails{
 	private boolean enabled;			//账号是否可用  true为可用，false不可用
 	private boolean accountNonLocked;	//账号是否被锁！true为没锁，false为已锁
 	private Date lastCloseDate;			//最近一次禁用或者注销时间
+	private Date createDate;			//创建日期
+	private String telphone;			//手机号码
 	
 	/**
 	 * 所属角色
@@ -43,15 +44,14 @@ public class User implements UserDetails{
 		this.enabled = enabled;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public Collection<GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> ga = new ArrayList<GrantedAuthority>();
+		List<GrantedAuthority> grantedAuthoritys = new ArrayList<GrantedAuthority>();
 		if(roles!=null){
 			for(Role r:roles){
-				ga.add(new GrantedAuthorityImpl(r.getName()));
+				grantedAuthoritys.add(new SimpleGrantedAuthority(r.getName()));
 			}
 		}
-		return ga;
+		return grantedAuthoritys;
 	}
 
 	public String getPassword() {
@@ -134,10 +134,25 @@ public class User implements UserDetails{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		return accountNonLocked;
 	}
-	
+
+	public String getTelphone() {
+		return telphone;
+	}
+
+	public void setTelphone(String telphone) {
+		this.telphone = telphone;
+	}
 }

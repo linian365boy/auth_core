@@ -52,7 +52,6 @@ public interface MenuDao{
 	 * @CreateDate: 2013-3-28
 	 */
 	//@Query("select distinct m from Menu m where m.parentMenu = null")
-	//public List<Menu> findParentMenuByRole();
 	public List<Menu> findParentMenu();
 	/**
 	 * @FunName: loadMenuByUrl
