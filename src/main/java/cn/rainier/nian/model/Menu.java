@@ -18,6 +18,9 @@ public class Menu implements Serializable {
 	private Integer priority; // 菜单展示的优先级
 	private String url; // 点击菜单的链接
 	
+	//非table字段
+	//父级菜单名称
+	private transient String parentMenuName;
 	private transient List<Menu> children;
 
 	public Menu() {
@@ -27,6 +30,10 @@ public class Menu implements Serializable {
 		this.name = name;
 		this.url = url;
 		this.priority = priority;
+	}
+
+	public List<Menu> getChildren() {
+		return children;
 	}
 
 	public Integer getId() {
@@ -45,12 +52,20 @@ public class Menu implements Serializable {
 		return parentId;
 	}
 
+	public String getParentMenuName() {
+		return parentMenuName;
+	}
+
 	public Integer getPriority() {
 		return priority;
 	}
 
 	public String getUrl() {
 		return url;
+	}
+
+	public void setChildren(List<Menu> children) {
+		this.children = children;
 	}
 
 	public void setId(Integer id) {
@@ -69,6 +84,10 @@ public class Menu implements Serializable {
 		this.parentId = parentId;
 	}
 
+	public void setParentMenuName(String parentMenuName) {
+		this.parentMenuName = parentMenuName;
+	}
+
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
@@ -81,12 +100,5 @@ public class Menu implements Serializable {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
-
-	public void setChildren(List<Menu> children) {
-		this.children = children;
-	}
-
-	public List<Menu> getChildren() {
-		return children;
-	}
+	
 }
