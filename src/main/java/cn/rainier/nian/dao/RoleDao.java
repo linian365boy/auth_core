@@ -1,6 +1,9 @@
 package cn.rainier.nian.dao;
 
 import java.util.List;
+
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.model.Role;
 
 /**
@@ -52,4 +55,18 @@ public interface RoleDao {
 		public void save(Role role);
 		
 		public void delete(String roleId);
+		/**
+		 * findAllCount:查询所有除默认角色的角色数量
+		 * @author tanfan 
+		 * @return 
+		 * @since JDK 1.7
+		 */
+		public long findAllCount();
+		/**
+		 * findAllCount:查询所有除默认角色的角色
+		 * @author tanfan 
+		 * @return 
+		 * @since JDK 1.7
+		 */
+		public List<Role> findAll(RequestParam param);
 }

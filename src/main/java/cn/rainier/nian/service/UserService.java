@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
 
@@ -19,7 +21,7 @@ public interface UserService extends UserDetailsService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Integer userId);
+	public PageRainier<User> findAllUser(RequestParam param,Integer userId);
 	/**
 	 * @FunName: loadUserByName
 	 * @Description:  根据用户名查询用户。用户名是唯一的

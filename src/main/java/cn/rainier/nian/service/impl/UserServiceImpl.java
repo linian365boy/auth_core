@@ -14,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.UserService;
@@ -41,11 +44,11 @@ public class UserServiceImpl implements UserService {
 	 * 查询用户列表，根据Id排序，降序
 	 * @param userId 
 	 */
-	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Integer userId) {
+	public PageRainier<User> findAllUser(RequestParam param,Integer userId) {
 		PageRainier<User> page = null;
 		long count = userDao.findAllCount(userId);
-		page = new PageRainier<User>(count, pageNo, pageSize);
-		page.setResult(userDao.findList(userId,(pageNo-1)*pageSize,pageSize));
+		page = new PageRainier<User>(count);
+		page.setResult(userDao.findList(userId,param));
 		return page;
 	}
 	

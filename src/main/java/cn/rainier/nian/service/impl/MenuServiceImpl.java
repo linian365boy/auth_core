@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.dao.MenuDao;
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
@@ -63,10 +66,10 @@ public class MenuServiceImpl implements MenuService {
 	 * @param pageSize
 	 * @return
 	 */
-	public PageRainier<Menu> findAll(Integer pageNo, Integer pageSize) {
+	public PageRainier<Menu> findAll(RequestParam param) {
 		long count = menuDao.findAllCount();
 		PageRainier<Menu> page = new PageRainier<Menu>(count);
-		page.setResult(menuDao.findList((pageNo-1)*pageSize,pageSize));
+		page.setResult(menuDao.findList(param));
 		return page;
 	}
 	@Override

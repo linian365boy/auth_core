@@ -3,6 +3,8 @@ package cn.rainier.nian.service;
 import java.util.List;
 import java.util.Set;
 
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.utils.PageRainier;
@@ -34,7 +36,7 @@ public interface MenuService {
 	 * @return 
 	 * @since JDK 1.7
 	 */
-	public PageRainier<Menu> findAll(Integer pageNo, Integer pageSize);
+	public PageRainier<Menu> findAll(RequestParam param);
 	
 	/**
 	 * findParentMenuByRole:根据角色查第一级菜单

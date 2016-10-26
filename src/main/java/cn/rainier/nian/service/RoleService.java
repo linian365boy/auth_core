@@ -2,6 +2,8 @@ package cn.rainier.nian.service;
 
 import java.util.List;
 
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
@@ -91,5 +93,5 @@ public interface RoleService {
 	
 	public List<Role> findAllByAjax();
 	
-	public PageRainier<Role> findAll(Integer pageNo, Integer pageSize, boolean b);
+	public PageRainier<Role> findAll(RequestParam param);
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
@@ -50,10 +52,14 @@ public class RoleServiceImpl implements RoleService{
 			}
 		}
 	}*/
-
-	public PageRainier<Role> findAll(Integer pageNo, Integer pageSize, boolean b) {
-		return null;
+	
+	public PageRainier<Role> findAll(RequestParam param) {
+		long count = roleDao.findAllCount();
+		PageRainier<Role> page = new PageRainier<Role>(count);
+		page.setResult(roleDao.findAll(param));
+		return page;
 	}
+	
 	@Override
 	public Role loadRoleByName(String roleName) {
 		return roleDao.findOne(roleName);

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.brightengold.common.vo.RequestParam;
+
 import cn.rainier.nian.model.User;
 /**
  * @param <ID>
@@ -101,6 +103,6 @@ public interface UserDao {
 	 */
 	public long findAllCount(Integer userId);
 	
-	public List<User> findList(@Param("loginId") Integer userId,@Param("start") int start,@Param("pageSize") Integer pageSize);
+	public List<User> findList(@Param("loginId") Integer userId,@Param("param") RequestParam param);
 	
 }
