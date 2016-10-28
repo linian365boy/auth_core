@@ -111,4 +111,6 @@ public interface UserService extends UserDetailsService {
 	public void resetPassword(String username);
 	
 	public void changePassword(String oldPassword, String password, Authentication authentication);
+	
+	public boolean updateUser(User user);
 }

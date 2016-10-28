@@ -69,4 +69,11 @@ public interface RoleDao {
 		 * @since JDK 1.7
 		 */
 		public List<Role> findAll(RequestParam param);
+		/**
+		 * updateRole:修改角色 
+		 * @author tanfan 
+		 * @param role 
+		 * @since JDK 1.7
+		 */
+		public void updateRole(Role role);
 }

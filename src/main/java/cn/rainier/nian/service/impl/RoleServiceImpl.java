@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.brightengold.common.vo.RequestParam;
 
 import cn.rainier.nian.dao.RoleDao;
+import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.RoleService;
@@ -16,6 +17,7 @@ import cn.rainier.nian.utils.PageRainier;
 public class RoleServiceImpl implements RoleService{
 	private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 	private RoleDao roleDao;
+	private UserDao userDao;
 	
 	/**
 	 * @FunName: findAllByAjax
@@ -75,12 +77,17 @@ public class RoleServiceImpl implements RoleService{
 		return false;
 	}
 	@Override
-	public void delRole(String roleId) {
+	public boolean delRole(String roleId) {
+		boolean flag = false;
 		try {
+			//修改次角色下的用户的角色为null
+			userDao.updateUserRole(roleId,null);
 			roleDao.delete(roleId);
+			flag = true;
 		} catch (Exception e) {
 			logger.error("删除角色报错",e);
 		}
+		return flag;
 	}
 	@Override
 	public List<Role> findRoleByUser(User u) {
@@ -95,6 +102,17 @@ public class RoleServiceImpl implements RoleService{
 	}
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
+	}
+	@Override
+	public boolean updateRole(Role temp) {
+		boolean flag = false;
+		try {
+			roleDao.updateRole(temp);
+			flag = true;
+		} catch (Exception e) {
+			logger.error("删除角色报错",e);
+		}
+		return flag;
 	}
 	
 	/**

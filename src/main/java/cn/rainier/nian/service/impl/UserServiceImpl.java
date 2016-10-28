@@ -202,4 +202,14 @@ public class UserServiceImpl implements UserService {
 	public void setUserCache(UserCache userCache) {
 		this.userCache = userCache;
 	}
+	@Override
+	public boolean updateUser(User user) {
+		try{
+			userDao.updateUser(user);
+			return true;
+		}catch(Exception e){
+			logger.error("修改用户失败！",e);
+		}
+		return false;
+	}
 }

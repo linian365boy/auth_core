@@ -104,5 +104,13 @@ public interface UserDao {
 	public long findAllCount(Integer userId);
 	
 	public List<User> findList(@Param("loginId") Integer userId,@Param("param") RequestParam param);
+	/**
+	 * updateUserRole:修改用户的角色
+	 * @author tanfan 
+	 * @param roleId 
+	 * @since JDK 1.7
+	 */
+	public void updateUserRole(@Param("roleId")String roleId,@Param("newRoleId") String newRoleId);
 	
+	public void updateUser(User user);
 }

@@ -34,7 +34,7 @@ public interface RoleService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public void delRole(String roleId);
+	public boolean delRole(String roleId);
 	/**
 	 * @FunName: findAllSpecification
 	 * @Description:  自定义的Specification
@@ -94,4 +94,6 @@ public interface RoleService {
 	public List<Role> findAllByAjax();
 	
 	public PageRainier<Role> findAll(RequestParam param);
+	
+	public boolean updateRole(Role temp);
 }
