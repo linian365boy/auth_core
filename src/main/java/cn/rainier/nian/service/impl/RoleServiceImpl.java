@@ -114,6 +114,12 @@ public class RoleServiceImpl implements RoleService{
 		}
 		return flag;
 	}
+	public UserDao getUserDao() {
+		return userDao;
+	}
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 	
 	/**
 	 * @FunName: exportToCSVExNoDisplay
@@ -171,5 +177,4 @@ public class RoleServiceImpl implements RoleService{
 			}
 		}
 	}*/
-	
 }
