@@ -1,7 +1,7 @@
 package cn.rainier.nian.service.impl;
 
 import java.util.List;
-import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class MenuServiceImpl implements MenuService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public List<Menu> findParentMenuByRole(Set<Role> roles,boolean flag) {
+	public List<Menu> findParentMenuByRole(List<Role> roles,boolean flag) {
 		List<Menu> parentM = null;
 		if(!flag){//flag=false
 			parentM =  menuDao.findParentMenuByRole(roles);
@@ -82,7 +82,17 @@ public class MenuServiceImpl implements MenuService {
 			menuDao.save(m);
 			return true;
 		}catch(Exception e){
-			logger.error("报错菜单报错",e);
+			logger.error("新增菜单报错",e);
+		}
+		return false;
+	}
+	@Override
+	public boolean updateMenu(Menu menu) {
+		try{
+			menuDao.update(menu);
+			return true;
+		}catch(Exception e){
+			logger.error("修改菜单报错",e);
 		}
 		return false;
 	}
@@ -99,5 +109,18 @@ public class MenuServiceImpl implements MenuService {
 	}
 	public void setMenuDao(MenuDao menuDao) {
 		this.menuDao = menuDao;
+	}
+	
+	public boolean updateRoleMenu(String roleName, List<Menu> menus) {
+		try{
+			//先删除表数据
+			menuDao.deleteRoleMenu(roleName);
+			//再插入表数据
+			menuDao.insertRoleMenu(roleName,menus);
+			return true;
+		}catch(Exception e){
+			logger.error("更新角色菜单报错！",e);
+		}
+		return false;
 	}
 }

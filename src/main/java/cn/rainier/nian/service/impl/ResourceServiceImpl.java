@@ -1,13 +1,15 @@
 package cn.rainier.nian.service.impl;
 
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.service.ResourceService;
 
 public class ResourceServiceImpl implements ResourceService{
 	private ResourceDao resourceDao;
+	private Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
 	/**
 	 * 通过父菜单得到资源
 	 * （通过二级菜单得到三级资源）
@@ -42,5 +44,18 @@ public class ResourceServiceImpl implements ResourceService{
 	}
 	public void setResourceDao(ResourceDao resourceDao) {
 		this.resourceDao = resourceDao;
+	}
+	public boolean updateRoleResources(String roleName, List<Resource> ress) {
+		boolean flag = false;
+		try{
+			//先删除表数据
+			resourceDao.delRoleResources(roleName);
+			//再插入
+			resourceDao.insertRoleResources(roleName,ress);
+			flag = true;
+		}catch(Exception e){
+			logger.error("更新角色资源报错！",e);
+		}
+		return flag;
 	}
 }

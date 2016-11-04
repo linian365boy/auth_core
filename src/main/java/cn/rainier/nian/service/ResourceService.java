@@ -42,4 +42,13 @@ public interface ResourceService {
 	 * @CreateDate: 2013-5-24
 	 */
 	public Resource loadResourceByResource(Integer id);
+	/**
+	 * updateRoleResources:更新角色资源
+	 * @author tanfan 
+	 * @param roleName
+	 * @param ress
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean updateRoleResources(String roleName, List<Resource> ress);
 }

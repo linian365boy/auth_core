@@ -2,6 +2,8 @@ package cn.rainier.nian.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.rainier.nian.model.Resource;
 
 /**
@@ -73,13 +75,15 @@ public interface ResourceDao {
 	 * @CreateDate: 2013-3-28
 	 */
 	public List<Resource> getAllTypeResource(String type);
-	
 	/**
-	 * findResourceByRole:根据用户角色，获取所有可以访问的资源
+	 * updateRoleResources:更新角色资源
 	 * @author tanfan 
-	 * @param roles
-	 * @return 
+	 * @param roleName
+	 * @param ress 
 	 * @since JDK 1.7
 	 */
-	//public List<Resource> findResourceByRole(Set<Role> roles);
+	public void insertRoleResources(@Param("roleName") String roleName,@Param("resources") List<Resource> ress);
+	
+	public void delRoleResources(String roleName);
+	
 }

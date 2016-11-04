@@ -88,5 +88,11 @@ public interface MenuDao{
 	 */
 	//@Query("select m from Resource r join r.menu m where r.id = ?")
 	public Menu loadMenuByResourceId(Integer resourceId);
+	
+	public void update(Menu menu);
+	
+	public void insertRoleMenu(@Param("roleName") String roleName,@Param("menus") List<Menu> menus);
+	
+	public void deleteRoleMenu(String roleName);
 }
 

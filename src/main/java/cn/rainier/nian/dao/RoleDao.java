@@ -2,8 +2,11 @@ package cn.rainier.nian.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.brightengold.common.vo.RequestParam;
 
+import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 
 /**
@@ -76,4 +79,25 @@ public interface RoleDao {
 		 * @since JDK 1.7
 		 */
 		public void updateRole(Role role);
+		
+		public List<Resource> findResourceByRole(String roleId);
+		
+		public String findRoleDesc(String roleId);
+		
+		public List<Role> findNoDefaultRoleByUser(Integer userId);
+		/**
+		 * deleteByUserId:根据用户id删除角色
+		 * @author tanfan 
+		 * @param userId 
+		 * @since JDK 1.7
+		 */
+		public void deleteByUserId(Integer userId);
+		/**
+		 * insertUserRole:插入用户角色数据
+		 * @author tanfan 
+		 * @param userId
+		 * @param roles 
+		 * @since JDK 1.7
+		 */
+		public void insertUserRole(@Param("userId") Integer userId,@Param("roles") List<Role> roles);
 }

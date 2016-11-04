@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.brightengold.common.vo.RequestParam;
 
+import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
@@ -82,6 +83,16 @@ public interface RoleService {
 	 * @CreateDate: 2013-3-28
 	 */
 	public List<Role> findRoleByUser(User u);
+	
+	/**
+	 * @FunName: findRoleByUser
+	 * @Description:  查看此用户的所有角色，排除默认角色
+	 * @return
+	 * @Author: ln
+	 * @CreateDate: 2013-3-28
+	 */
+	public List<Role> findNoDefaultRoleByUser(Integer userId);
+	
 	/**
 	 * @FunName: findDefault
 	 * @Description:  查询默认的角色，只有一个！
@@ -96,4 +107,29 @@ public interface RoleService {
 	public PageRainier<Role> findAll(RequestParam param);
 	
 	public boolean updateRole(Role temp);
+	/**
+	 * findResourceById:通过角色查询权限
+	 * @author tanfan 
+	 * @param roleId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public List<Resource> findResourceById(String roleId);
+	/**
+	 * 根据角色name查询中文描述
+	 * @author tanfan 
+	 * @param roleId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public String findRoleDesc(String roleId);
+	/**
+	 * updateUserRole:修改用户角色
+	 * @author tanfan 
+	 * @param id
+	 * @param roles
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean updateUserRole(Integer id, List<Role> roles);
 }

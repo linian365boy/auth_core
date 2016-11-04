@@ -1,7 +1,6 @@
 package cn.rainier.nian.service;
 
 import java.util.List;
-import java.util.Set;
 
 import com.brightengold.common.vo.RequestParam;
 
@@ -46,5 +45,22 @@ public interface MenuService {
 	 * @return 
 	 * @since JDK 1.7
 	 */
-	public List<Menu> findParentMenuByRole(Set<Role> roles, boolean flag);
+	public List<Menu> findParentMenuByRole(List<Role> roles, boolean flag);
+	/**
+	 * updateMenu:修改菜单 
+	 * @author tanfan 
+	 * @param menu
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean updateMenu(Menu menu);
+	/**
+	 * updateRoleMenu:更新角色菜单
+	 * @author tanfan 
+	 * @param roleName
+	 * @param menus
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean updateRoleMenu(String roleName, List<Menu> menus);
 }

@@ -9,6 +9,7 @@ import com.brightengold.common.vo.RequestParam;
 
 import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.dao.UserDao;
+import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.RoleService;
@@ -90,6 +91,20 @@ public class RoleServiceImpl implements RoleService{
 		return flag;
 	}
 	@Override
+	public boolean updateUserRole(Integer userId, List<Role> roles) {
+		boolean flag = false;
+		try {
+			//先修改表数据
+			roleDao.deleteByUserId(userId);
+			//再插入数据
+			roleDao.insertUserRole(userId,roles);
+			flag = true;
+		} catch (Exception e) {
+			logger.error("删除角色报错",e);
+		}
+		return flag;
+	}
+	@Override
 	public List<Role> findRoleByUser(User u) {
 		return roleDao.findRoleByUser(u.getId());
 	}
@@ -97,12 +112,12 @@ public class RoleServiceImpl implements RoleService{
 	public Role findDefault() {
 		return roleDao.findDefaultRole();
 	}
-	public RoleDao getRoleDao() {
-		return roleDao;
+	
+	@Override
+	public List<Resource> findResourceById(String roleId) {
+		return roleDao.findResourceByRole(roleId);
 	}
-	public void setRoleDao(RoleDao roleDao) {
-		this.roleDao = roleDao;
-	}
+	
 	@Override
 	public boolean updateRole(Role temp) {
 		boolean flag = false;
@@ -114,13 +129,27 @@ public class RoleServiceImpl implements RoleService{
 		}
 		return flag;
 	}
+	@Override
+	public String findRoleDesc(String roleId) {
+		return roleDao.findRoleDesc(roleId);
+	}
+	
+	@Override
+	public List<Role> findNoDefaultRoleByUser(Integer userId) {
+		return roleDao.findNoDefaultRoleByUser(userId);
+	}
 	public UserDao getUserDao() {
 		return userDao;
 	}
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
+	public RoleDao getRoleDao() {
+		return roleDao;
+	}
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
 	/**
 	 * @FunName: exportToCSVExNoDisplay
 	 * @Description:  角色导出csv文件，只导出能显示的三级资源。

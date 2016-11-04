@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +30,7 @@ public class User implements UserDetails{
 	/**
 	 * 所属角色
 	 */
-	private transient Set<Role> roles;
+	private transient List<Role> roles;
 	
 	public void setUsername(String username) {
 		this.username = username;
@@ -74,11 +74,11 @@ public class User implements UserDetails{
 		return enabled;
 	}
 	
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 	
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 	
