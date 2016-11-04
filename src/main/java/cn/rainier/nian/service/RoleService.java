@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.brightengold.common.vo.RequestParam;
 
+import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
@@ -96,4 +97,20 @@ public interface RoleService {
 	public PageRainier<Role> findAll(RequestParam param);
 	
 	public boolean updateRole(Role temp);
+	/**
+	 * findResourceById:通过角色查询权限
+	 * @author tanfan 
+	 * @param roleId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public List<Resource> findResourceById(String roleId);
+	/**
+	 * 根据角色name查询中文描述
+	 * @author tanfan 
+	 * @param roleId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public String findRoleDesc(String roleId);
 }

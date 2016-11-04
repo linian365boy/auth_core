@@ -82,7 +82,17 @@ public class MenuServiceImpl implements MenuService {
 			menuDao.save(m);
 			return true;
 		}catch(Exception e){
-			logger.error("报错菜单报错",e);
+			logger.error("新增菜单报错",e);
+		}
+		return false;
+	}
+	@Override
+	public boolean updateMenu(Menu menu) {
+		try{
+			menuDao.update(menu);
+			return true;
+		}catch(Exception e){
+			logger.error("修改菜单报错",e);
 		}
 		return false;
 	}

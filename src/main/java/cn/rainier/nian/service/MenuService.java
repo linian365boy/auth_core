@@ -47,4 +47,12 @@ public interface MenuService {
 	 * @since JDK 1.7
 	 */
 	public List<Menu> findParentMenuByRole(Set<Role> roles, boolean flag);
+	/**
+	 * updateMenu:修改菜单 
+	 * @author tanfan 
+	 * @param menu
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean updateMenu(Menu menu);
 }

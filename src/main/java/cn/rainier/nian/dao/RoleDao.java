@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.brightengold.common.vo.RequestParam;
 
+import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 
 /**
@@ -76,4 +77,8 @@ public interface RoleDao {
 		 * @since JDK 1.7
 		 */
 		public void updateRole(Role role);
+		
+		public List<Resource> findResourceByRole(String roleId);
+		
+		public String findRoleDesc(String roleId);
 }
