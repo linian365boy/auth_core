@@ -63,4 +63,5 @@ public interface MenuService {
 	 * @since JDK 1.7
 	 */
 	public boolean updateRoleMenu(String roleName, List<Menu> menus);
+	
 }
