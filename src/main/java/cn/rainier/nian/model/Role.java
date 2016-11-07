@@ -23,8 +23,12 @@ public class Role implements Serializable {
 	public Role(){
 	}
 	
-	public Role(String name, String describes) {
+	public Role(String name) {
 		this.name = name;
+	}
+	
+	public Role(String name, String describes) {
+		this(name);
 		this.describes = describes;
 	}
 

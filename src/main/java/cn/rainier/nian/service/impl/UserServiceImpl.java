@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.brightengold.common.vo.RequestParam;
 
+import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.UserService;
@@ -26,6 +27,7 @@ import cn.rainier.nian.utils.PageRainier;
 public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	private UserCache userCache;
+	private RoleDao roleDao;
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	/**
@@ -59,12 +61,14 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 保存用户
 	 */
+	@Override
 	public boolean saveUser(User model) {
 		try{
-			if(model.getId()==null){	//新增用户
-				model.setPassword(new Md5PasswordEncoder().encodePassword(model.getPassword(), null));
-			}
+			//新增用户
+			model.setPassword(new Md5PasswordEncoder().encodePassword(model.getPassword(), null));
 			userDao.save(model);
+			logger.info("新增用户信息|{}",model);
+			roleDao.insertUserRole(model.getId(), model.getRoles());
 			return true;
 		}catch(Exception e){
 			logger.error("保存用户报错",e);
@@ -74,6 +78,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 删除用户
 	 */
+	@Override
 	public void deleteUser(Integer userId) {
 		try{
 			userDao.delete(userId);
@@ -182,12 +187,24 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 注销用户
 	 */
+	@Override
 	public boolean unsubscribe(String username) {
 		try{
 			userDao.unsubscribe(username);
 			return true;
 		}catch(Exception e){
 			logger.error("用户注销失败！",e);
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean updateUser(User user) {
+		try{
+			userDao.updateUser(user);
+			return true;
+		}catch(Exception e){
+			logger.error("修改用户失败！",e);
 		}
 		return false;
 	}
@@ -202,14 +219,10 @@ public class UserServiceImpl implements UserService {
 	public void setUserCache(UserCache userCache) {
 		this.userCache = userCache;
 	}
-	@Override
-	public boolean updateUser(User user) {
-		try{
-			userDao.updateUser(user);
-			return true;
-		}catch(Exception e){
-			logger.error("修改用户失败！",e);
-		}
-		return false;
+	public RoleDao getRoleDao() {
+		return roleDao;
+	}
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
 	}
 }
