@@ -123,4 +123,9 @@ public class MenuServiceImpl implements MenuService {
 		}
 		return false;
 	}
+	
+	@Override
+	public List<Menu> findMenuByRole(String roleName) {
+		return menuDao.findMenuByRole(roleName);
+	}
 }

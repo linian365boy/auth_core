@@ -94,5 +94,7 @@ public interface MenuDao{
 	public void insertRoleMenu(@Param("roleName") String roleName,@Param("menus") List<Menu> menus);
 	
 	public void deleteRoleMenu(String roleName);
+	
+	public List<Menu> findMenuByRole(String roleName);
 }
 

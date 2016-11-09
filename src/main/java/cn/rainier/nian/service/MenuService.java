@@ -63,5 +63,13 @@ public interface MenuService {
 	 * @since JDK 1.7
 	 */
 	public boolean updateRoleMenu(String roleName, List<Menu> menus);
+	/**
+	 * findMenuByRole:根据角色查菜单
+	 * @author tanfan 
+	 * @param roleName
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public List<Menu> findMenuByRole(String roleName);
 	
 }
