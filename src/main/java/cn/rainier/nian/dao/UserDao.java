@@ -98,10 +98,11 @@ public interface UserDao {
 	 * findAllCount:排除当前登录者，统计用户数
 	 * @author tanfan 
 	 * @param userId
+	 * @param param 
 	 * @return 
 	 * @since JDK 1.7
 	 */
-	public long findAllCount(Integer userId);
+	public long findAllCount(@Param("loginId") Integer userId,@Param("param") RequestParam param);
 	
 	public List<User> findList(@Param("loginId") Integer userId,@Param("param") RequestParam param);
 	/**

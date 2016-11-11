@@ -67,7 +67,7 @@ public class MenuServiceImpl implements MenuService {
 	 * @return
 	 */
 	public PageRainier<Menu> findAll(RequestParam param) {
-		long count = menuDao.findAllCount();
+		long count = menuDao.findAllCount(param);
 		PageRainier<Menu> page = new PageRainier<Menu>(count);
 		page.setResult(menuDao.findList(param));
 		return page;

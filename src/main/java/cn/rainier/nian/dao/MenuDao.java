@@ -74,7 +74,7 @@ public interface MenuDao{
 	
 	public Menu findOne(Integer id);
 	
-	public long findAllCount();
+	public long findAllCount(RequestParam param);
 	
 	public List<Menu> findList(RequestParam param);
 	

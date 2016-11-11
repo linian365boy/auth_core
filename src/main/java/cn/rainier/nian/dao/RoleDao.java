@@ -64,7 +64,7 @@ public interface RoleDao {
 		 * @return 
 		 * @since JDK 1.7
 		 */
-		public long findAllCount();
+		public long findAllCount(RequestParam param);
 		/**
 		 * findAllCount:查询所有除默认角色的角色
 		 * @author tanfan 

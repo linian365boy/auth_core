@@ -57,7 +57,7 @@ public class RoleServiceImpl implements RoleService{
 	}*/
 	
 	public PageRainier<Role> findAll(RequestParam param) {
-		long count = roleDao.findAllCount();
+		long count = roleDao.findAllCount(param);
 		PageRainier<Role> page = new PageRainier<Role>(count);
 		page.setResult(roleDao.findAll(param));
 		return page;

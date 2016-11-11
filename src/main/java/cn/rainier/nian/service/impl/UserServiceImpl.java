@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PageRainier<User> findAllUser(RequestParam param,Integer userId) {
 		PageRainier<User> page = null;
-		long count = userDao.findAllCount(userId);
+		long count = userDao.findAllCount(userId,param);
 		page = new PageRainier<User>(count);
 		page.setResult(userDao.findList(userId,param));
 		return page;
