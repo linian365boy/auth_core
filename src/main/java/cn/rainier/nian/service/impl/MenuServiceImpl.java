@@ -73,8 +73,15 @@ public class MenuServiceImpl implements MenuService {
 		return page;
 	}
 	@Override
-	public void delMenu(Integer id) {
-		menuDao.delete(id);
+	public boolean delMenu(Integer id) {
+		boolean flag = false;
+		try{
+			menuDao.delete(id);
+			flag = true;
+		}catch(Exception e){
+			logger.error("删除菜单报错！");
+		}
+		return flag;
 	}
 	@Override
 	public boolean saveMenu(Menu m) {

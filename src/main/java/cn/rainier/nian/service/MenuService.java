@@ -10,7 +10,7 @@ import cn.rainier.nian.utils.PageRainier;
 
 public interface MenuService {
 	
-	public void delMenu(Integer id);
+	public boolean delMenu(Integer id);
 	
 	public boolean saveMenu(Menu m);
 	
