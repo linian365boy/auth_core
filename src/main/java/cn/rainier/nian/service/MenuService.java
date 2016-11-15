@@ -79,6 +79,6 @@ public interface MenuService {
 	 * @return 
 	 * @since JDK 1.7
 	 */
-	public int findChildMenuCount(Integer menuId);
+	public long findChildMenuCount(Integer menuId);
 	
 }

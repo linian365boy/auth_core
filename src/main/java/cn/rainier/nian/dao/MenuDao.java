@@ -97,6 +97,6 @@ public interface MenuDao{
 	
 	public List<Menu> findMenuByRole(String roleName);
 	
-	public int findChildMenuCount(Integer menuId);
+	public long findChildMenuCount(Integer menuId);
 }
 
