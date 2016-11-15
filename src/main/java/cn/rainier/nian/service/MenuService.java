@@ -72,4 +72,13 @@ public interface MenuService {
 	 */
 	public List<Menu> findMenuByRole(String roleName);
 	
+	/**
+	 * findChildMenuCount:获取子节点个数
+	 * @author tanfan 
+	 * @param menuId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public int findChildMenuCount(Integer menuId);
+	
 }

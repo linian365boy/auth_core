@@ -96,5 +96,7 @@ public interface MenuDao{
 	public void deleteRoleMenu(String roleName);
 	
 	public List<Menu> findMenuByRole(String roleName);
+	
+	public int findChildMenuCount(Integer menuId);
 }
 

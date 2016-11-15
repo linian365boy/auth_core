@@ -132,6 +132,11 @@ public class MenuServiceImpl implements MenuService {
 	}
 	
 	@Override
+	public int findChildMenuCount(Integer menuId) {
+		return menuDao.findChildMenuCount(menuId);
+	}
+	
+	@Override
 	public List<Menu> findMenuByRole(String roleName) {
 		return menuDao.findMenuByRole(roleName);
 	}
