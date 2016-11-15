@@ -12,7 +12,7 @@ public interface MenuService {
 	
 	public boolean delMenu(Integer id);
 	
-	public boolean saveMenu(Menu m);
+	public int saveMenu(Menu m);
 	
 	public Menu loadMenuById(Integer id);
 	

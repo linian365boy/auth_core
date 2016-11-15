@@ -51,4 +51,12 @@ public interface ResourceService {
 	 * @since JDK 1.7
 	 */
 	public boolean updateRoleResources(String roleName, List<Resource> ress);
+	/**
+	 * saveResource:插入一条方法Method资源
+	 * @author tanfan 
+	 * @param resString
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean saveResource(Resource resource);
 }

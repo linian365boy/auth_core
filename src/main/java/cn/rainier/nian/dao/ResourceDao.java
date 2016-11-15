@@ -85,5 +85,12 @@ public interface ResourceDao {
 	public void insertRoleResources(@Param("roleName") String roleName,@Param("resources") List<Resource> ress);
 	
 	public void delRoleResources(String roleName);
+	/**
+	 * saveResource: 保存资源
+	 * @author tanfan 
+	 * @param resource 
+	 * @since JDK 1.7
+	 */
+	public void saveResource(Resource resource);
 	
 }

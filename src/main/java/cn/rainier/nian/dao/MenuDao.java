@@ -70,7 +70,7 @@ public interface MenuDao{
 	
 	public void delete(Integer id);
 	
-	public void save(Menu m);
+	public int save(Menu m);
 	
 	public Menu findOne(Integer id);
 	

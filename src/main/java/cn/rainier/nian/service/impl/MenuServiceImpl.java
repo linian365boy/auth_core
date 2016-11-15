@@ -84,14 +84,8 @@ public class MenuServiceImpl implements MenuService {
 		return flag;
 	}
 	@Override
-	public boolean saveMenu(Menu m) {
-		try{
-			menuDao.save(m);
-			return true;
-		}catch(Exception e){
-			logger.error("新增菜单报错",e);
-		}
-		return false;
+	public int saveMenu(Menu m) {
+		return menuDao.save(m);
 	}
 	@Override
 	public boolean updateMenu(Menu menu) {

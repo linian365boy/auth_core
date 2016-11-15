@@ -58,4 +58,16 @@ public class ResourceServiceImpl implements ResourceService{
 		}
 		return flag;
 	}
+	
+	@Override
+	public boolean saveResource(Resource resource) {
+		boolean flag = false;
+		try{
+			resourceDao.saveResource(resource);
+			flag = true;
+		}catch(Exception e){
+			logger.error("保存资源报错！",e);
+		}
+		return flag;
+	}
 }
