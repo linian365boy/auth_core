@@ -92,5 +92,12 @@ public interface ResourceDao {
 	 * @since JDK 1.7
 	 */
 	public void saveResource(Resource resource);
+	/**
+	 * insertSuperRoleResource:(这里用一句话描述这个方法的作用). 
+	 * @author tanfan 
+	 * @param resource 
+	 * @since JDK 1.7
+	 */
+	public void insertSuperRoleResource(Resource resource);
 	
 }

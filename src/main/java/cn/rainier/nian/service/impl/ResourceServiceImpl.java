@@ -63,7 +63,10 @@ public class ResourceServiceImpl implements ResourceService{
 	public boolean saveResource(Resource resource) {
 		boolean flag = false;
 		try{
+			//保存资源
 			resourceDao.saveResource(resource);
+			//资源权限加入到超级管理员角色里面
+			resourceDao.insertSuperRoleResource(resource);
 			flag = true;
 		}catch(Exception e){
 			logger.error("保存资源报错！",e);
