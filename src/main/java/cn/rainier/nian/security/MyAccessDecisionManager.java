@@ -39,7 +39,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 		}
 		// 没有权限
 		logger.error("没有权限访问=>{}！",object);
-		throw new AccessDeniedException(" 没有权限访问！ ");
+		throw new AccessDeniedException("没有权限访问！ ");
 	}
 
 	public boolean supports(ConfigAttribute attribute) {

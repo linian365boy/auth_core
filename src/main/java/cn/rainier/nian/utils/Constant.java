@@ -17,4 +17,13 @@ public class Constant {
 	//重置密码默认的密码
 	public final static String DEFAULTPASSWORD = "888888";
 	
+	/**
+	 * 登录验证码key
+	 */
+	public static final String LOGIN_VERIFY_CODE_KEY = "loginVerifyCode";
+	
+	/**
+	 * 登录表单验证码输入框名称
+	 */
+	public static final String FORM_CAPTCHA_NAME = "captcha";
 }
