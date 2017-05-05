@@ -31,9 +31,6 @@ public interface UserDao {
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select distinct u from User u,Role g where u.id in elements(g.users) and g.id = ?") //有用的
-	//@Query("select distinct u from User u,Role g where u in elements(g.users) and g.id = ?")		//有用的
-	//@Query("select distinct u from User u join u.roles r where r.id = ? order by u.id desc")		//有用的
 	public List<User> findUserByRole(String roleId);
 	/**
 	 * @FunName: findByName
@@ -43,7 +40,6 @@ public interface UserDao {
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select u from User u where u.username = :username")
 	public User findByName(@Param("username") String username);
 	/**
 	 * @FunName: findUserByLike
@@ -53,7 +49,6 @@ public interface UserDao {
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select u from User u where u.username like :un")
 	public List<User> findUserByLike(@Param("un") String username);
 	/**
 	 * @FunName: getPasswordById
@@ -63,10 +58,8 @@ public interface UserDao {
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select u.password from User u where u.id = ?")
 	public String getPasswordById(Integer id);
-	//@Modifying
-	//@Query("update User set password = ?2 where username = ?1")
+	
 	public void changePassword(@Param("username") String username,@Param("password") String password);
 	/**
 	 * @FunName: unsubscribe
@@ -75,8 +68,6 @@ public interface UserDao {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-8
 	 */
-	//@Modifying
-	//@Query("update User set accountNonLocked = false,lastCloseDate=NOW() where username = ?1")
 	public void unsubscribe(String username);
 	/**
 	 * @FunName: unsubscribe
@@ -85,10 +76,6 @@ public interface UserDao {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-8
 	 */
-	//@Modifying
-	//@Query("update User set accountNonLocked = false,lastCloseDate=NOW() where id = ?1")
-	//public void unsubscribe(Integer id);
-	
 	public int save(User model);
 	
 	public void delete(Integer id);

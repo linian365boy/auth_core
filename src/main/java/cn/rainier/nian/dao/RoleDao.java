@@ -31,7 +31,6 @@ public interface RoleDao {
 		 * @Author: ln
 		 * @CreateDate: 2013-3-28
 		 */
-		//@Query("select r.name,r.desc from Role r where r.defaultOrNo = false")
 		public List<Role> finAllByAjax();
 		/**
 		 * @FunName: findRoleByUser
@@ -41,7 +40,6 @@ public interface RoleDao {
 		 * @Author: ln
 		 * @CreateDate: 2013-3-28
 		 */
-		//@Query("select r from Role r join r.users u where u.id =?")
 		public List<Role> findRoleByUser(Integer userId);
 		/**
 		 * @FunName: findDefaultRole
@@ -50,7 +48,6 @@ public interface RoleDao {
 		 * @Author: ln
 		 * @CreateDate: 2013-4-7
 		 */
-		//@Query("select r from Role r where r.defaultOrNo = true")
 		public Role findDefaultRole();
 		
 		public Role findOne(String roleName);

@@ -33,7 +33,6 @@ public interface MenuDao{
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select distinct m from Menu m join m.roles r where m.parentMenu = null and r in ?1")
 	public List<Menu> findParentMenuByRole(@Param("roles") Collection<Role> roles);
 	/**
 	 * @FunName: getChildldByParentAndRoles
@@ -44,7 +43,6 @@ public interface MenuDao{
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select distinct m from Menu m join m.roles r where m.parentMenu.id = ?1 and r in ?2")
 	public List<Menu> getChildldByParentAndRoles(@Param("pid") Integer pid,@Param("roles") Collection<Role> roles);
 	/**
 	 * @FunName: findParentMenuByRole
@@ -53,7 +51,6 @@ public interface MenuDao{
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select distinct m from Menu m where m.parentMenu = null")
 	public List<Menu> findParentMenu();
 	/**
 	 * @FunName: loadMenuByUrl
@@ -63,9 +60,8 @@ public interface MenuDao{
 	 * @Author: ln
 	 * @CreateDate: 2013-4-16
 	 */
-	//@Query("select m from Menu m where m.url like ?1")
 	public Menu loadMenuByUrl(String url);
-	//@Query("select id,name from Menu m where m.parentMenu = null")
+	
 	public List<Menu> findParentByAjax();
 	
 	public void delete(Integer id);
@@ -86,7 +82,6 @@ public interface MenuDao{
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	//@Query("select m from Resource r join r.menu m where r.id = ?")
 	public Menu loadMenuByResourceId(Integer resourceId);
 	
 	public void update(Menu menu);
