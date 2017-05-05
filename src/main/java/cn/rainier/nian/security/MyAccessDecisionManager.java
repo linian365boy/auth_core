@@ -2,6 +2,9 @@ package cn.rainier.nian.security;
 
 import java.util.Collection;
 import java.util.Iterator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -10,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 public class MyAccessDecisionManager implements AccessDecisionManager {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MyAccessDecisionManager.class);
+	
 	public void decide(Authentication authentication, Object object,
 			Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
@@ -32,7 +38,8 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 			}
 		}
 		// 没有权限
-		throw new AccessDeniedException(" 没有权限访问！ ");
+		logger.error("没有权限访问=>{}！",object);
+		throw new AccessDeniedException("没有权限访问！ ");
 	}
 
 	public boolean supports(ConfigAttribute attribute) {

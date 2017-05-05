@@ -1,59 +1,34 @@
 package cn.rainier.nian.service.impl;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.cache.NullUserCache;
 
-import cn.rainier.nian.dao.ResourceDao;
+import com.brightengold.common.vo.RequestParam;
+
+import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.dao.UserDao;
-import cn.rainier.nian.model.Resource;
-import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
-import cn.rainier.nian.service.OutCSVForUser;
 import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
 
 public class UserServiceImpl implements UserService {
 	private UserDao userDao;
-	private UserCache userCache = new NullUserCache();
-	private OutCSVForUser outCSV ;
-	@Autowired
-	private ResourceDao resourceDao ;
-	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	private UserCache userCache;
+	private RoleDao roleDao;
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	/**
 	 * 根据用户名查询用户，用户名唯一
@@ -71,28 +46,12 @@ public class UserServiceImpl implements UserService {
 	 * 查询用户列表，根据Id排序，降序
 	 * @param userId 
 	 */
-	public PageRainier<User> findAllUser(Integer pageNo,Integer pageSize,Long userId, boolean flag) {
+	public PageRainier<User> findAllUser(RequestParam param,Integer userId) {
 		PageRainier<User> page = null;
-		if(flag){
-			Page<User> tempPage = userDao.findAll(userSpecification(userId),new PageRequest(pageNo-1, pageSize,new Sort(Direction.DESC, "id")));
-			page = new PageRainier<User>(tempPage.getTotalElements(), pageNo, pageSize);
-			List<User> users = tempPage.getContent();
-			page.setResult(users);
-		}else{
-			page = new PageRainier<User>();
-			page.setResult(userDao.findAll(new Sort(Direction.ASC, "id")));
-		}
+		long count = userDao.findAllCount(userId,param);
+		page = new PageRainier<User>(count);
+		page.setResult(userDao.findList(userId,param));
 		return page;
-	}
-	
-	private Specification<User> userSpecification(final Long id){
-		return new Specification<User>() {
-			@Override
-			public Predicate toPredicate(Root<User> root,
-					CriteriaQuery<?> query, CriteriaBuilder cb) {
-				return cb.notEqual(root.get("id"), id);
-			}
-		};
 	}
 	
 	public User loadUserByName(String userid) {
@@ -102,26 +61,27 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 保存用户
 	 */
-	public User saveUser(User model) {
+	@Override
+	public boolean saveUser(User model) {
 		try{
-			if(model.getId()==null){	//新增用户
-				model.setPassword(new Md5PasswordEncoder().encodePassword(model.getPassword(), null));
-			}
-			User u =  userDao.save(model);
-			if(u!=null){
-				return u;
-			}
+			//新增用户
+			model.setPassword(new Md5PasswordEncoder().encodePassword(model.getPassword(), null));
+			userDao.save(model);
+			logger.info("新增用户信息|{}",model);
+			roleDao.insertUserRole(model.getId(), model.getRoles());
+			return true;
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("保存用户报错",e);
 		}
-		return null;
+		return false;
 	}
 	/**
 	 * 删除用户
 	 */
-	public void deleteUser(User model) {
+	@Override
+	public void deleteUser(Integer userId) {
 		try{
-			userDao.delete(model);
+			userDao.delete(userId);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -129,7 +89,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据Id删除用户
 	 */
-	public void deleteUserById(Serializable id) {
+	public void deleteUserById(Integer id) {
 		try {
 			userDao.delete(id);
 		} catch (Exception e) {
@@ -139,7 +99,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据Id删除密码
 	 */
-	public String getPaswordById(Serializable id) {
+	public String getPaswordById(Integer id) {
 		return userDao.getPasswordById(id);
 	}
 
@@ -152,34 +112,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 批量添加
-	 */
-	public List<User> batchAdd(List<User> lists){
-		return userDao.save(lists);
-	}
-	
-	/**
-	 * 批量删除
-	 */
-	public void batchDel(List<User> users){
-		userDao.deleteInBatch(users);
-	}
-	
-	public Long findCount() {
-		return userDao.count();
-	}
-	/**
 	 * 模糊查询用户
 	 */
-	public PageRainier<User> findUserByLike(Specification<User> speci,String field,String condition,Integer pageNo,Integer pageSize){
+	/*public PageRainier<User> findUserByLike(Specification<User> speci,String field,String condition,Integer pageNo,Integer pageSize){
 		Page<User> tempPage = userDao.findAll(speci, 
 				new PageRequest(pageNo-1,pageSize,new Sort(Direction.DESC,"id")));
 		PageRainier<User> page = new PageRainier<User>(tempPage.getTotalElements(),pageNo,pageSize);
 		page.setResult(tempPage.getContent());
 		return page;
-	}
+	}*/
 	
-	private Specification<User> findUserByRoleLikeSpeci(final String role){
+	/*private Specification<User> findUserByRoleLikeSpeci(final String role){
 		return new Specification<User>() {
 			public Predicate toPredicate(Root<User> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -188,24 +131,24 @@ public class UserServiceImpl implements UserService {
 				return cb.like(join.<String>get("desc"), role);
 			}
 		};
-	}
+	}*/
 	/**
 	 * 根据角色模糊查询用户
 	 */
-	public PageRainier<User> findUserByRoleLike(final String role,Integer pageNo,Integer pageSize){
+	/*public PageRainier<User> findUserByRoleLike(final String role,Integer pageNo,Integer pageSize){
 		Specification<User> speci = findUserByRoleLikeSpeci(role);
 		Page<User> tempPage = userDao.findAll(speci, new PageRequest(pageNo-1,pageSize));
 		PageRainier<User> page = new PageRainier<User>(tempPage.getTotalElements(),pageNo,pageSize);
 		page.setResult(tempPage.getContent());
 		return page;
-	}
+	}*/
 	/**
 	 * @FunName: changePassword
 	 * @Description:  修改密码
 	 * @param oldPassword 旧密码
 	 * @param newPassword 新密码
 	 * @param currentUser 当前用户
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
 	public void changePassword(String oldPassword, String newPassword, Authentication currentUser){
@@ -227,75 +170,59 @@ public class UserServiceImpl implements UserService {
         return newAuthentication;
     }
 	
-	public UserCache getUserCache() {
-		return userCache;
-	}
-	public void setUserCache(UserCache userCache) {
-		this.userCache = userCache;
-	}
 	/**
 	 * @FunName: resetPassword
 	 * @Description:  重置密码
 	 * @param username
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
 	public void resetPassword(String username){
 		userDao.changePassword(username, new Md5PasswordEncoder().encodePassword(username,null));
 	}
 
-	public User loadUserById(Serializable id) {
+	public User loadUserById(Integer id) {
 		return userDao.findOne(id);
 	}
 	/**
 	 * 注销用户
 	 */
-	public void unsubscribe(User model) {
-		userDao.unsubscribe(model.getUsername());
-	}
-	/**
-	 * 注销用户
-	 */
-	public void unsubscribe(Serializable id) {
-		userDao.unsubscribe(id);
-	}
-	/**
-	 * 导出csv文件中
-	 */
-	public void exportToCSV(List<User> users, String fileName,
-			String[] headers, HttpServletResponse response){
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-			outCSV.exportCSV(headers, users, out);
-			out.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally{
-			if(out!=null){
-				out.close();
-			}
+	@Override
+	public boolean unsubscribe(String username) {
+		try{
+			userDao.unsubscribe(username);
+			return true;
+		}catch(Exception e){
+			logger.error("用户注销失败！",e);
 		}
+		return false;
 	}
 	
-	public OutCSVForUser getOutCSV() {
-		return outCSV;
-	}
-	public void setOutCSV(OutCSVForUser outCSV) {
-		this.outCSV = outCSV;
+	@Override
+	public boolean updateUser(User user) {
+		try{
+			userDao.updateUser(user);
+			return true;
+		}catch(Exception e){
+			logger.error("修改用户失败！",e);
+		}
+		return false;
 	}
 	
-	// 取得用户的权限
-	private Set<GrantedAuthority> obtionGrantedAuthorities(User user) {
-		//List<Resource> resources = resourceDao.findResourceByRole(user.getRoles());
-		List<Resource> resources = null;
-		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
-		for (Resource res : resources) {
-			// TODO:ZZQ 用户可以访问的资源名称（或者说用户所拥有的权限） 注意：必须"ROLE_"开头
-			// 关联代码：applicationContext-security.xml
-			// 关联代码：com.huaxin.security.MySecurityMetadataSource#loadResourceDefine
-			authSet.add(new SimpleGrantedAuthority("ROLE_" + res.getRes_string()));
-		}
-		return authSet;
+	@Override
+	public List<User> findUserByRole(String roleId) {
+		return userDao.findUserByRole(roleId);
+	}
+	public UserCache getUserCache() {
+		return userCache;
+	}
+	public void setUserCache(UserCache userCache) {
+		this.userCache = userCache;
+	}
+	public RoleDao getRoleDao() {
+		return roleDao;
+	}
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
 	}
 }

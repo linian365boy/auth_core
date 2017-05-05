@@ -1,85 +1,55 @@
 package cn.rainier.nian.service;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import com.brightengold.common.vo.RequestParam;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
-
-import cn.rainier.nian.dao.RoleDao;
+import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
 
-public abstract class RoleService {
-	private RoleDao roleDao;
-	private OutCSVForRole outCSV;
+public interface RoleService {
 	/**
 	 * @FunName: loadRoleByName
 	 * @Description:  根据角色名获取角色信息
 	 * @param roleName
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public Role loadRoleByName(String roleName){
-		return roleDao.findOne(roleName);
-	}
+	public Role loadRoleByName(String roleName);
 	/**
 	 * @FunName: saveRole
 	 * @Description:  保存角色
 	 * @param role
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public Role saveRole(Role role){
-		try {
-			Role r = roleDao.save(role);
-			if(r!=null){
-				return r;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	public boolean saveRole(Role role);
 	/**
 	 * @FunName: delRole
 	 * @Description:  删除角色
 	 * @param role
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public void delRole(Role role){
-		try {
-			roleDao.delete(role);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	public boolean delRole(String roleId);
 	/**
 	 * @FunName: findAllSpecification
 	 * @Description:  自定义的Specification
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public Specification<Role> findAllSpecification(){
+	/*public Specification<Role> findAllSpecification(){
 		return new Specification<Role>(){
 			public Predicate toPredicate(Root<Role> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
 				return cb.equal(root.get("defaultOrNo"), false);
 			}};
-	}
+	}*/
 	/**
 	 * @FunName: findAll
 	 * @Description:  查询全部角色，角色列表
@@ -87,10 +57,10 @@ public abstract class RoleService {
 	 * @param pageSize
 	 * @param flag
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<Role> findAll(Integer pageNo,Integer pageSize,boolean flag){
+	/*public PageRainier<Role> findAll(Integer pageNo,Integer pageSize,boolean flag){
 		PageRainier<Role> page = null;
 		if(flag){
 			Specification<Role> rs = findAllSpecification();
@@ -104,48 +74,62 @@ public abstract class RoleService {
 			page.setResult(roleDao.findAll(new Sort(Direction.DESC, "createDate")));
 			return page;
 		}
-	}
-	public RoleDao getRoleDao() {
-		return roleDao;
-	}
-	public void setRoleDao(RoleDao roleDao) {
-		this.roleDao = roleDao;
-	}
+	}*/
 	/**
 	 * @FunName: findRoleByUser
 	 * @Description:  查看此用户的所有角色
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-3-28
 	 */
-	public List<Role> findRoleByUser(User u){
-		return roleDao.findRoleByUser(u.getId());
-	}
+	public List<Role> findRoleByUser(User u);
+	
+	/**
+	 * @FunName: findRoleByUser
+	 * @Description:  查看此用户的所有角色，排除默认角色
+	 * @return
+	 * @Author: ln
+	 * @CreateDate: 2013-3-28
+	 */
+	public List<Role> findNoDefaultRoleByUser(Integer userId);
+	
 	/**
 	 * @FunName: findDefault
 	 * @Description:  查询默认的角色，只有一个！
 	 * @return
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public Role findDefault(){
-		return roleDao.findDefaultRole();
-	}
+	public Role findDefault();
+	
+	public List<Role> findAllByAjax();
+	
+	public PageRainier<Role> findAll(RequestParam param);
+	
+	public boolean updateRole(Role temp);
 	/**
-	 * @FunName: findUserByRole
-	 * @Description:  查询某角色下的用户对象
+	 * findResourceById:通过角色查询权限
+	 * @author tanfan 
 	 * @param roleId
-	 * @return
-	 * @Author: 李年
-	 * @CreateDate: 2013-5-24
+	 * @return 
+	 * @since JDK 1.7
 	 */
-	public List<User> findUserByRole(Serializable roleId){
-		return roleDao.findUserByRole(roleId);
-	}
-	public OutCSVForRole getOutCSV() {
-		return outCSV;
-	}
-	public void setOutCSV(OutCSVForRole outCSV) {
-		this.outCSV = outCSV;
-	}
+	public List<Resource> findResourceById(String roleId);
+	/**
+	 * 根据角色name查询中文描述
+	 * @author tanfan 
+	 * @param roleId
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public String findRoleDesc(String roleId);
+	/**
+	 * updateUserRole:修改用户角色
+	 * @author tanfan 
+	 * @param id
+	 * @param roles
+	 * @return 
+	 * @since JDK 1.7
+	 */
+	public boolean updateUserRole(Integer id, List<Role> roles);
 }

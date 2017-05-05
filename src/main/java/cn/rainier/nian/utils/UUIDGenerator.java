@@ -8,7 +8,7 @@ import java.util.UUID;
  * @Comments: 生成UUID
  * @JDK Version Used:<JDK1.6>		
  * @Namespace: cn.rainier.nian.utils
- * @Author: 李年
+ * @Author: ln
  * @Create Date: 2013-5-24
  * @Modified By: 
  * @Modified Date: 
@@ -22,7 +22,7 @@ public class UUIDGenerator {
 	 * @FunName: getUUID
 	 * @Description:  生成UUID，把生成的"-"换成了""
 	 * @return UUID
-	 * @Author: 李年
+	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
 	public static String getUUID(){
