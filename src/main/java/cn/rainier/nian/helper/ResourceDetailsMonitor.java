@@ -3,7 +3,10 @@ package cn.rainier.nian.helper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
@@ -13,13 +16,19 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 public class ResourceDetailsMonitor implements InitializingBean {
+	private static Logger logger = LoggerFactory.getLogger(ResourceDetailsMonitor.class);
+	@Autowired
 	private FilterSecurityInterceptor filterSecurityInterceptor;
+	@Autowired
 	private AccessDecisionManager accessDecisionManager;
+	@Autowired
 	private DelegatingMethodSecurityMetadataSource delegatingMethodDefinitionSource;
+	@Autowired
 	private ResourceDetailsBuilder resourceDetailsBuilder;
+	@Autowired
 	private MethodSecurityInterceptor methodSecurityInterceptor;
-	private Collection<? extends ConfigAttribute> hasMethodAttribute;
-	private Collection<? extends ConfigAttribute> hasUrlAttribute;
+	private Collection<ConfigAttribute> hasMethodAttribute;
+	private Collection<ConfigAttribute> hasUrlAttribute;
 
 	public void setFilterSecurityInterceptor(FilterSecurityInterceptor filterSecurityInterceptor) {
 		this.filterSecurityInterceptor = filterSecurityInterceptor;
@@ -32,7 +41,7 @@ public class ResourceDetailsMonitor implements InitializingBean {
 
 	// spring 加载该bean后调用
 	public void afterPropertiesSet() throws Exception {
-		// resourceDetailsBuilder = new ResourceDetailsBuilder(dataSource);
+		logger.info("-------- ResourceDetailsMonitor afterPropertiesSet start --------");
 		// 修改默认的accessDecisionManager
 		filterSecurityInterceptor.setAccessDecisionManager(accessDecisionManager);
 		// 保存已经有的方法资源配置
@@ -58,8 +67,7 @@ public class ResourceDetailsMonitor implements InitializingBean {
 			list.add(source);
 			// 为何要new一个，而不是在原有基础上添加，
 			// 因为DelegatingMethodSecurityMetadataSource存在缓存
-			DelegatingMethodSecurityMetadataSource delegatingMethodDefinitionSource = new DelegatingMethodSecurityMetadataSource(
-					list);
+			DelegatingMethodSecurityMetadataSource delegatingMethodDefinitionSource = new DelegatingMethodSecurityMetadataSource(list);
 			methodSecurityInterceptor.setSecurityMetadataSource(delegatingMethodDefinitionSource);
 		}
 	}
@@ -84,7 +92,7 @@ public class ResourceDetailsMonitor implements InitializingBean {
 		return hasMethodAttribute;
 	}
 
-	public void setHasMethodAttribute(Collection<? extends ConfigAttribute> hasMethodAttribute) {
+	public void setHasMethodAttribute(Collection<ConfigAttribute> hasMethodAttribute) {
 		this.hasMethodAttribute = hasMethodAttribute;
 	}
 
@@ -92,7 +100,7 @@ public class ResourceDetailsMonitor implements InitializingBean {
 		return hasUrlAttribute;
 	}
 
-	public void setHasUrlAttribute(Collection<? extends ConfigAttribute> hasUrlAttribute) {
+	public void setHasUrlAttribute(Collection<ConfigAttribute> hasUrlAttribute) {
 		this.hasUrlAttribute = hasUrlAttribute;
 	}
 

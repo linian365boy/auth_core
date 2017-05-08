@@ -2,15 +2,14 @@ package cn.rainier.nian.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.core.ClassEmitter;
 import net.sf.cglib.core.Constants;
 import net.sf.cglib.core.EmitUtils;
 import net.sf.cglib.core.TypeUtils;
-
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Type;
+
 /**
  * @CopyRright (c)2012-20XX:Rainier
  * @Project: auth_core
@@ -27,8 +26,9 @@ import org.objectweb.asm.Type;
  */
 public class BeanGeneratorObj extends BeanGenerator{
 	public BeanGeneratorObj(){}
-	private Map props = new HashMap();
+	private Map<String, Type> props = new HashMap<>();
 	
+	@Override
 	public void addProperty(String name, Class type) {
 		super.addProperty(name, type);
 		if (props.containsKey(name)) {

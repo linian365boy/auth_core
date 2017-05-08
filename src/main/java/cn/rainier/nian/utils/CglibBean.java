@@ -3,7 +3,6 @@ package cn.rainier.nian.utils;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.beans.BeanMap;
 import net.sf.cglib.core.NamingPolicy;
@@ -21,13 +20,13 @@ public class CglibBean{
   public CglibBean() {  
     super();  
   }  
-  @SuppressWarnings("unchecked")  
-  public CglibBean(Map propertyMap) {  
+  
+  public CglibBean(Map<String, Class> propertyMap) {  
     this.object = generateBean(propertyMap);  
     this.beanMap = BeanMap.create(this.object);  
   } 
   
-  public CglibBean(String className,Map propertyMap) {
+  public CglibBean(String className,Map<String, Class> propertyMap) {
 		this.object = generateBean(className,propertyMap);
 		this.beanMap = BeanMap.create(this.object);
 	}
@@ -54,18 +53,18 @@ public class CglibBean{
   public Object getObject() {  
     return this.object;  
   }  
-  @SuppressWarnings("unchecked")  
-  private Object generateBean(Map propertyMap) {  
+  
+  private Object generateBean(Map<String, Class> propertyMap) {  
     BeanGenerator generator = new BeanGenerator();  
-    Set keySet = propertyMap.keySet();  
-    for (Iterator i = keySet.iterator(); i.hasNext();) {  
-     String key = (String) i.next();  
-     generator.addProperty(key, (Class) propertyMap.get(key));  
+    Set<String> keySet = propertyMap.keySet();  
+    for (Iterator<String> i = keySet.iterator(); i.hasNext();) {  
+    	String key = i.next();  
+    	generator.addProperty(key, propertyMap.get(key));  
     }  
     return generator.create();  
   }
   
-  private Object generateBean(final String className,Map propertyMap) {
+  private Object generateBean(final String className,Map<String, Class> propertyMap) {
 		BeanGeneratorObj generator = new BeanGeneratorObj();
 		
 		generator.setNamingPolicy(new NamingPolicy() {
@@ -73,10 +72,10 @@ public class CglibBean{
 				return className;
 			}
 		});
-		Set keySet = propertyMap.keySet();
-		for (Iterator i = keySet.iterator(); i.hasNext();) {
-			String key = (String) i.next();
-			generator.addProperty(key, (Class) propertyMap.get(key));
+		Set<String> keySet = propertyMap.keySet();
+		for (Iterator<String> i = keySet.iterator(); i.hasNext();) {
+			String key = i.next();
+			generator.addProperty(key, propertyMap.get(key));
 		}
 		return generator.create();
 	}

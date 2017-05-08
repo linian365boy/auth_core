@@ -44,10 +44,11 @@ public class User implements UserDetails{
 		this.enabled = enabled;
 	}
 	
-	public Collection<GrantedAuthority> getAuthorities() {
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> grantedAuthoritys = new ArrayList<GrantedAuthority>();
-		if(roles!=null){
-			for(Role r:roles){
+		if(roles != null){
+			for(Role r : roles){
 				grantedAuthoritys.add(new SimpleGrantedAuthority(r.getName()));
 			}
 		}

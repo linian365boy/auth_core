@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	 * 根据用户名查询用户，用户名唯一
 	 */
 	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException, DataAccessException {
+			throws UsernameNotFoundException {
 		User user =  this.loadUserByName(username);
 		if(user!=null){
 			logger.info("用户名：{}，时间：{}，成功登录系统！",
