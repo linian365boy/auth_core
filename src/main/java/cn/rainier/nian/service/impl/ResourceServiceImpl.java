@@ -3,18 +3,24 @@ package cn.rainier.nian.service.impl;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import cn.rainier.nian.dao.ResourceDao;
 import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.service.ResourceService;
 
+@Service
 public class ResourceServiceImpl implements ResourceService{
+	private static Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
+	@Autowired
 	private ResourceDao resourceDao;
-	private Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
 	/**
 	 * 通过父菜单得到资源
 	 * （通过二级菜单得到三级资源）
 	 * 只获取可以显示的资源
 	 */
+	@Override
 	public List<Resource> findResourceByParentId(Integer menuId){
 		return resourceDao.findResourceByParentId(menuId);
 	}
@@ -26,12 +32,14 @@ public class ResourceServiceImpl implements ResourceService{
 	 * @Author: ln
 	 * @CreateDate: 2013-6-5
 	 */
+	@Override
 	public List<Resource> findAllResourceByParentId(Integer menuId){
 		return resourceDao.findAllResourceByParentId(menuId);
 	}
 	/**
 	 * 通过角色拿到所有能访问的资源
 	 */
+	@Override
 	public List<Resource> findResourceByRole(String name) {
 		return resourceDao.findResourceByRole(name);
 	}
@@ -39,12 +47,7 @@ public class ResourceServiceImpl implements ResourceService{
 	public Resource loadResourceByResource(Integer id) {
 		return resourceDao.loadResourceByResourceId(id);
 	}
-	public ResourceDao getResourceDao() {
-		return resourceDao;
-	}
-	public void setResourceDao(ResourceDao resourceDao) {
-		this.resourceDao = resourceDao;
-	}
+	@Override
 	public boolean updateRoleResources(String roleName, List<Resource> ress) {
 		boolean flag = false;
 		try{

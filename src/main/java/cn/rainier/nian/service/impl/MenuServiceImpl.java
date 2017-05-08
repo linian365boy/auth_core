@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.brightengold.common.vo.RequestParam;
 
@@ -13,9 +15,11 @@ import cn.rainier.nian.model.Role;
 import cn.rainier.nian.service.MenuService;
 import cn.rainier.nian.utils.PageRainier;
 
+@Service
 public class MenuServiceImpl implements MenuService {
-	private MenuDao menuDao;
 	private static final Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
+	@Autowired
+	private MenuDao menuDao;
 	/**
 	 * @FunName: findParentMenuByRole
 	 * @Description:  根据所属角色查找能访问的一级菜单
@@ -25,6 +29,7 @@ public class MenuServiceImpl implements MenuService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
+	@Override
 	public List<Menu> findParentMenuByRole(List<Role> roles,boolean flag) {
 		List<Menu> parentM = null;
 		if(!flag){//flag=false
@@ -45,27 +50,17 @@ public class MenuServiceImpl implements MenuService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
+	@Override
 	public Menu loadMenuByResourceId(Integer resourceId) {
 		return menuDao.loadMenuByResourceId(resourceId);
 	}
-	/**
-	 * @FunName: loadMenuByUrl
-	 * @Description:  根据URL判断所属的菜单模块
-	 * @param url
-	 * @return
-	 * @Author: ln
-	 * @CreateDate: 2013-5-24
-	 */
-	public Menu loadMenuByUrl(String url) {
-		return menuDao.loadMenuByUrl(url);
-	}
-	
 	/**
 	 * @Description:菜单列表
 	 * @param pageNo
 	 * @param pageSize
 	 * @return
 	 */
+	@Override
 	public PageRainier<Menu> findAll(RequestParam param) {
 		long count = menuDao.findAllCount(param);
 		PageRainier<Menu> page = new PageRainier<Menu>(count);
@@ -105,13 +100,7 @@ public class MenuServiceImpl implements MenuService {
 	public List<Menu> findParentByAjax() {
 		return menuDao.findParentByAjax();
 	}
-	public MenuDao getMenuDao() {
-		return menuDao;
-	}
-	public void setMenuDao(MenuDao menuDao) {
-		this.menuDao = menuDao;
-	}
-	
+	@Override
 	public boolean updateRoleMenu(String roleName, List<Menu> menus) {
 		try{
 			//先删除表数据

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.brightengold.common.vo.RequestParam;
 
@@ -15,9 +17,12 @@ import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.RoleService;
 import cn.rainier.nian.utils.PageRainier;
 
+@Service
 public class RoleServiceImpl implements RoleService{
 	private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+	@Autowired
 	private RoleDao roleDao;
+	@Autowired
 	private UserDao userDao;
 	
 	/**
@@ -27,6 +32,7 @@ public class RoleServiceImpl implements RoleService{
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
+	@Override
 	public List<Role> findAllByAjax() {
 		return roleDao.finAllByAjax();
 	}
@@ -56,6 +62,7 @@ public class RoleServiceImpl implements RoleService{
 		}
 	}*/
 	
+	@Override
 	public PageRainier<Role> findAll(RequestParam param) {
 		long count = roleDao.findAllCount(param);
 		PageRainier<Role> page = new PageRainier<Role>(count);
@@ -137,18 +144,6 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public List<Role> findNoDefaultRoleByUser(Integer userId) {
 		return roleDao.findNoDefaultRoleByUser(userId);
-	}
-	public UserDao getUserDao() {
-		return userDao;
-	}
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
-	public RoleDao getRoleDao() {
-		return roleDao;
-	}
-	public void setRoleDao(RoleDao roleDao) {
-		this.roleDao = roleDao;
 	}
 	/**
 	 * @FunName: exportToCSVExNoDisplay

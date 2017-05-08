@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.brightengold.common.vo.RequestParam;
 
@@ -23,15 +25,20 @@ import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
 
+@Service
 public class UserServiceImpl implements UserService {
-	private UserDao userDao;
-	private UserCache userCache;
-	private RoleDao roleDao;
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private UserCache userCache;
+	@Autowired
+	private RoleDao roleDao;
 	
 	/**
 	 * 根据用户名查询用户，用户名唯一
 	 */
+	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		User user =  this.loadUserByName(username);
@@ -45,6 +52,7 @@ public class UserServiceImpl implements UserService {
 	 * 查询用户列表，根据Id排序，降序
 	 * @param userId 
 	 */
+	@Override
 	public PageRainier<User> findAllUser(RequestParam param,Integer userId) {
 		PageRainier<User> page = null;
 		long count = userDao.findAllCount(userId,param);
@@ -53,6 +61,7 @@ public class UserServiceImpl implements UserService {
 		return page;
 	}
 	
+	@Override
 	public User loadUserByName(String userid) {
 		return userDao.findByName(userid);
 	}
@@ -88,6 +97,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据Id删除用户
 	 */
+	@Override
 	public void deleteUserById(Integer id) {
 		try {
 			userDao.delete(id);
@@ -98,16 +108,9 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据Id删除密码
 	 */
+	@Override
 	public String getPaswordById(Integer id) {
 		return userDao.getPasswordById(id);
-	}
-
-	public UserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
 	}
 
 	/**
@@ -150,6 +153,7 @@ public class UserServiceImpl implements UserService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
+	@Override
 	public void changePassword(String oldPassword, String newPassword, Authentication currentUser){
 		currentUser = SecurityContextHolder.getContext().getAuthentication();
 		if(currentUser ==null){
@@ -176,10 +180,12 @@ public class UserServiceImpl implements UserService {
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
+	@Override
 	public void resetPassword(String username){
 		userDao.changePassword(username, new Md5PasswordEncoder().encodePassword(username,null));
 	}
 
+	@Override
 	public User loadUserById(Integer id) {
 		return userDao.findOne(id);
 	}
@@ -217,11 +223,5 @@ public class UserServiceImpl implements UserService {
 	}
 	public void setUserCache(UserCache userCache) {
 		this.userCache = userCache;
-	}
-	public RoleDao getRoleDao() {
-		return roleDao;
-	}
-	public void setRoleDao(RoleDao roleDao) {
-		this.roleDao = roleDao;
 	}
 }
