@@ -2,6 +2,7 @@ package cn.rainier.nian.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import cn.rainier.nian.model.Resource;
@@ -20,6 +21,7 @@ import cn.rainier.nian.model.Resource;
  * @Why & What is modified: ? <修改原因描述>		
  * @Version:1.0<版本号>
  */
+@Mapper
 public interface ResourceDao {
 	/**
 	 * @FunName: getAllResource
