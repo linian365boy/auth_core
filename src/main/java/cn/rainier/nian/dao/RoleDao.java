@@ -2,7 +2,6 @@ package cn.rainier.nian.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.brightengold.common.vo.RequestParam;
@@ -24,7 +23,6 @@ import cn.rainier.nian.model.Role;
  * @Why & What is modified: ? <修改原因描述>		
  * @Version:1.0<版本号>
  */
-@Mapper
 public interface RoleDao {
 		/**
 		 * @FunName: finAllByAjax
