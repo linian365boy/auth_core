@@ -3,6 +3,7 @@ package cn.rainier.nian.helper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -15,6 +16,7 @@ import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
+//@Service
 public class ResourceDetailsMonitor implements InitializingBean {
 	private static Logger logger = LoggerFactory.getLogger(ResourceDetailsMonitor.class);
 	@Autowired

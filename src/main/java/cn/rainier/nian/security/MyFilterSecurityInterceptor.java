@@ -18,7 +18,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomSecurityFilter extends AbstractSecurityInterceptor implements Filter {
+public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 	@Autowired
 	private CustomSecurityMetadataSource securityMetadataSource;
 	@Autowired

@@ -50,11 +50,11 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 		if (resourceMap == null) {
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 			List<Resource> resources = resourceDao.getAllResource();
-			logger.info("loadResourceDefine get all resource|{} from DB", resources);
+			logger.info("loadResourceDefine get all {} resource from DB", resources!=null ? resources.size() : 0);
 			for (Resource resource : resources) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
 				//通过资源名称来表示具体的权限 注意：必须"ROLE_"开头
-				ConfigAttribute configAttribute = new SecurityConfig("ROLE_" + resource.getRoleName());
+				ConfigAttribute configAttribute = new SecurityConfig(resource.getRoleName());
 				configAttributes.add(configAttribute);
 				resourceMap.put(resource.getResString(), configAttributes);
 				logger.info("resource|{} add resource map", resource);
