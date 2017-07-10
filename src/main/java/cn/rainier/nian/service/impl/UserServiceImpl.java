@@ -1,8 +1,6 @@
 package cn.rainier.nian.service.impl;
 
-import java.util.Date;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +13,11 @@ import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.UserService;
-import cn.rainier.nian.utils.DateConverter;
 import cn.rainier.nian.utils.PageRainier;
 
 @Service
@@ -41,12 +36,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		User user =  this.loadUserByName(username);
-		if(user!=null){
-			logger.info("用户名：{}，时间：{}，成功登录系统！",
-					user.getUsername(),DateConverter.convert(String.class, new Date()));
-		}
-		return user;
+		return this.loadUserByName(username);
 	}
 	/**
 	 * 查询用户列表，根据Id排序，降序
