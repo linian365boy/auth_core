@@ -94,7 +94,10 @@ public class User implements UserDetails{
 	
 	@Override
 	public int hashCode() {
-		return id.intValue();
+		if(id != null) {
+			return id.intValue();
+		}
+		return 0;
 	}
 	
 	@Override
@@ -156,4 +159,5 @@ public class User implements UserDetails{
 	public void setTelphone(String telphone) {
 		this.telphone = telphone;
 	}
+
 }
