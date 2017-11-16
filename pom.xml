@@ -4,7 +4,7 @@
 
   <groupId>com.rainier.permission</groupId>
   <artifactId>auth_core</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>auth_core</name>
@@ -17,11 +17,6 @@
 	
   <dependencies>
 	<dependency>
-		<groupId>com.brightengold</groupId>
-  		<artifactId>brightengold-util</artifactId>
-  		<version>1.0.0-SNAPSHOT</version>
-	</dependency>
-	<dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-web</artifactId>
         <version>${org.springframework-version}</version>
@@ -31,29 +26,6 @@
         <artifactId>spring-security-config</artifactId>
         <version>${org.springframework-version}</version>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.10</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-	    <groupId>org.mybatis</groupId>
-	    <artifactId>mybatis</artifactId>
-	    <version>3.4.4</version>
-	</dependency>
-	<dependency>
-		<groupId>org.mortbay.jetty</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>3.0.20100224</version>
-	</dependency>
-	<!-- cglib start -->
-	<dependency>
-		<groupId>cglib</groupId>
-		<artifactId>cglib</artifactId>
-		<version>2.2</version>
-	</dependency>
-	<!-- cglib end -->
   </dependencies>
 
     <build>
