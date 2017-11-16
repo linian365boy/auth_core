@@ -54,7 +54,7 @@ public interface ResourceService {
 	/**
 	 * saveResource:插入一条方法Method资源
 	 * @author tanfan 
-	 * @param resString
+	 * @param resource
 	 * @return 
 	 * @since JDK 1.7
 	 */

@@ -60,7 +60,6 @@ public interface ResourceDao {
 	 * @FunName: loadResourceByResourceId
 	 * @Description:  查找权限菜单所属的子菜单
 	 * @param id
-	 * @param menu
 	 * @return
 	 * @Author: ln
 	 * @CreateDate: 2013-3-28

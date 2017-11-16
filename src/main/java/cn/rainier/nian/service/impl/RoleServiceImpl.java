@@ -6,9 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.Resource;
@@ -16,6 +13,7 @@ import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.RoleService;
 import cn.rainier.nian.utils.PageRainier;
+import top.zuishare.spi.dto.request.RequestParam;
 
 @Service
 public class RoleServiceImpl implements RoleService{

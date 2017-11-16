@@ -1,13 +1,11 @@
 package cn.rainier.nian.service;
 
 import java.util.List;
-
-import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
+import top.zuishare.spi.dto.request.RequestParam;
 
 public interface RoleService {
 	/**
@@ -31,7 +29,7 @@ public interface RoleService {
 	/**
 	 * @FunName: delRole
 	 * @Description:  删除角色
-	 * @param role
+	 * @param roleId
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */

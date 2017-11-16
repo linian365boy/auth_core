@@ -1,12 +1,10 @@
 package cn.rainier.nian.service;
 
 import java.util.List;
-
-import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.utils.PageRainier;
+import top.zuishare.spi.dto.request.RequestParam;
 
 public interface MenuService {
 	
@@ -30,8 +28,7 @@ public interface MenuService {
 	/**
 	 * findAll:分页查询菜单 
 	 * @author tanfan 
-	 * @param pageNo
-	 * @param pageSize
+	 * @param param
 	 * @return 
 	 * @since JDK 1.7
 	 */

@@ -1,27 +1,23 @@
 package cn.rainier.nian.service;
 
 import java.util.List;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
-import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.utils.PageRainier;
+import top.zuishare.spi.dto.request.RequestParam;
 
 public interface UserService extends UserDetailsService {
 	/**
 	 * @FunName: findAllUser
 	 * @Description:  查询所有用户。也是用户列表
-	 * @param pageNo
-	 * @param pageSize
+	 * @param param
 	 * @param userId 当前登录Id
 	 * @return 
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
-	public PageRainier<User> findAllUser(RequestParam param,Integer userId);
+	public PageRainier<User> findAllUser(RequestParam param, Integer userId);
 	/**
 	 * @FunName: loadUserByName
 	 * @Description:  根据用户名查询用户。用户名是唯一的
@@ -43,7 +39,7 @@ public interface UserService extends UserDetailsService {
 	/**
 	 * @FunName: deleteUser
 	 * @Description:  删除用户
-	 * @param model
+	 * @param id
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */
@@ -93,7 +89,7 @@ public interface UserService extends UserDetailsService {
 	/**
 	 * @FunName: unsubscribe
 	 * @Description:  注销用户
-	 * @param model
+	 * @param username
 	 * @Author: ln
 	 * @CreateDate: 2013-5-24
 	 */

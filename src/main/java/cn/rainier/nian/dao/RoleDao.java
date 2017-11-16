@@ -1,13 +1,10 @@
 package cn.rainier.nian.dao;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-
-import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.model.Resource;
 import cn.rainier.nian.model.Role;
+import top.zuishare.spi.dto.request.RequestParam;
 
 /**
  * @CopyRright (c)2012-20XX:Rainier

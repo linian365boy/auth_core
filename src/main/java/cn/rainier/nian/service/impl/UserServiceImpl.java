@@ -13,12 +13,12 @@ import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.brightengold.common.vo.RequestParam;
 import cn.rainier.nian.dao.RoleDao;
 import cn.rainier.nian.dao.UserDao;
 import cn.rainier.nian.model.User;
 import cn.rainier.nian.service.UserService;
 import cn.rainier.nian.utils.PageRainier;
+import top.zuishare.spi.dto.request.RequestParam;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	 * @param userId 
 	 */
 	@Override
-	public PageRainier<User> findAllUser(RequestParam param,Integer userId) {
+	public PageRainier<User> findAllUser(RequestParam param, Integer userId) {
 		PageRainier<User> page = null;
 		long count = userDao.findAllCount(userId,param);
 		page = new PageRainier<User>(count);

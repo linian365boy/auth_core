@@ -6,14 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.brightengold.common.vo.RequestParam;
-
 import cn.rainier.nian.dao.MenuDao;
 import cn.rainier.nian.model.Menu;
 import cn.rainier.nian.model.Role;
 import cn.rainier.nian.service.MenuService;
 import cn.rainier.nian.utils.PageRainier;
+import top.zuishare.spi.dto.request.RequestParam;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -56,8 +54,7 @@ public class MenuServiceImpl implements MenuService {
 	}
 	/**
 	 * @Description:菜单列表
-	 * @param pageNo
-	 * @param pageSize
+	 * @param param
 	 * @return
 	 */
 	@Override
